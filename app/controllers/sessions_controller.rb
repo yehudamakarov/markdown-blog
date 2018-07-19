@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
             render json: @user
             session[:logged_in] = true
         else
-            render json: {"key": "oops"}
+            render json: {"key": "oops"}, status: 403
         end
     end
 
@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
         if session[:logged_in]
             render json: {"SUCCESSS": "SESSION IS TRUE"}
         else 
-            render json: {"opps": "for session test"}
+            render json: {"opps": "for session test"}, status: 403
         end
     end
     

@@ -5,31 +5,16 @@ import axios from 'axios';
 
 class App extends Component {
   handleClick = () => {
-    // fetch('/login', {
-    //   credentials: 'include',
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Accept': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     "email": "abc",
-    //     "password": "123"
-    //   })
-    // }).then((resp) => {
-    //   return resp.json()
-    // }).then((json) => {
-    //   console.log(json)
-    // })
     axios.post('/login', {
       email: "abc",
-      password: "123"
+      password: "12"
     })
     .then(function (response) {
       console.log(response);
     })
     .catch(function (error) {
-      console.log(error);
+      console.log('ran error catch.');
+      console.log('error :', error);
     });
   }
 
@@ -39,7 +24,8 @@ class App extends Component {
       console.log(response.data);
     })
     .catch(function (error) {
-      console.log(error);
+      console.log('ran error catch.');
+      console.log('error :', error);
     });
 
 }
