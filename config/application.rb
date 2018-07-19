@@ -19,6 +19,10 @@ Bundler.require(*Rails.groups)
 
 module Mdblog
   class Application < Rails::Application
+    # Custom session set up for admin functionality.
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore, key: '8b6020569fb2a2af4b711a500be0a94f56c869a78db847769f8aade69963699b1bf7bccb6c94c3f2e9ab61ceb2a94539e2448b4c9caf5ba81bebfc339ee3d041', expire_after: 1.hour
+    # config.force_ssl = true
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
