@@ -25,10 +25,11 @@ export default class TestUploader extends Component {
     const resp = axios({
       method: 'post',
       url: 'https://api.imgur.com/3/image',
-      data: base64,
+      data: {
+        'image': base64,
+      },
       headers: {
         'Authorization': 'Client-ID 9ff2cbb10ead695',
-        'content-type': 'multipart/form-data'
       }
     }).then((resp) => {
       console.log('resp :', resp);
