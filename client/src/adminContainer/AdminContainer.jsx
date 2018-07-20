@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Logout from './Logout';
 import Dashboard from './Dashboard'
+import { connect } from 'react-redux';
 
 export class AdminContainer extends Component {
 
@@ -14,4 +15,4 @@ export class AdminContainer extends Component {
   }
 }
 
-export default AdminContainer
+export default connect(null)(AdminContainer)

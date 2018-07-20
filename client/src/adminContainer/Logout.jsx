@@ -1,15 +1,22 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom';
-import fakeAuth from './fakeAuth';
+import { connect } from 'react-redux';
+import { logoutAction } from "../store/actions/loginAction";
 
-const Logout = withRouter(({ history }) => (
-    fakeAuth.isAuthenticated === true
+const Logout = withRouter(({ history, isLoggedIn, logoutAction }) => (
+    isLoggedIn === true
       ? <button onClick={() => {
-          fakeAuth.signOut(() => {
+          logoutAction().then(() => {
             history.push('/')
           })
         }}>LogOut</button>
       : null
-  ))
+))
 
-export default Logout;
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: state.auth.isLoggedIn
+  }
+}
+
+export default connect(mapStateToProps, { logoutAction })(Logout)

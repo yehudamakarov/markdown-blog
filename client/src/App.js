@@ -6,6 +6,7 @@ import PrivateRoute from './adminContainer/PrivateRoute';
 import { 
   BrowserRouter as Router,
   Route,
+  Link,
 } from 'react-router-dom'
 
 class App extends Component {
@@ -15,6 +16,9 @@ class App extends Component {
         <h1>App Component</h1>
         <Router>
           <Fragment>
+            <Link to='/admin'>Admin</Link>
+            <Link to='/login'>Login</Link>
+            <Link to='/'>Home</Link>
             <Route exact path='/' component={PublicContainer} />
             <PrivateRoute exact path='/admin' component={AdminContainer} />
             <Route exact path='/login' component={Login} />

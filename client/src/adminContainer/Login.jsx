@@ -1,28 +1,66 @@
 import React, { Component } from 'react'
-import fakeAuth from './fakeAuth';
 import { Redirect } from "react-router-dom";
+import { loginAction } from '../store/actions/loginAction';
+import { connect } from 'react-redux';
 
-export default class Login extends Component {
-    state = {
-        redirectToReferrer: false
-      }
-    login = () => {
-        fakeAuth.authenticate(() => {
-            this.setState({
-            redirectToReferrer: true
-            })
-        })
+class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+        }
+    }
+    onChange = ({ target }) => {
+        this.setState(
+            {
+                [target.name]: target.value
+            }
+        )
+    }
+    onSubmit = (event) => {
+        event.preventDefault();
+        this.props.loginAction(this.state)
     }
     render() {
-        const { redirectToReferrer } = this.state;
-        if (redirectToReferrer === true) {
+        const { email, password } = this.state;
+        const { isLoggedIn } = this.props;
+        if (isLoggedIn === true) {
             return <Redirect to='/admin' />
         }
         return (
           <div>
-            <p>Please Login</p>
-            <button onClick={this.login}>Login</button>
+            <form onSubmit={this.onSubmit}>
+                <div>
+                    Email:
+                    <input
+                        type="text"
+                        value={email}
+                        name='email'
+                        onChange={this.onChange}
+                    />
+                </div>
+                <div>
+                    Password: 
+                    <input
+                        type="password"
+                        value={password}
+                        name='password'
+                        onChange={this.onChange}
+                    />
+                </div>
+                <div>
+                    <input type="submit"/>
+                </div>
+            </form>
           </div>
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+      isLoggedIn: state.auth.isLoggedIn
+    }
+}
+  
+export default connect(mapStateToProps,{ loginAction })(Login)

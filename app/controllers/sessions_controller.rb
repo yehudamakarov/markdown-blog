@@ -1,9 +1,7 @@
 class SessionsController < ApplicationController
 
     def create
-        @user = User.first.authenticate(params[:password])
-        
-                
+        @user = User.first.authenticate(params[:password])   
         if @user
             render json: @user
             session[:logged_in] = true
@@ -12,6 +10,11 @@ class SessionsController < ApplicationController
         end
     end
 
+    def destroy
+        session.clear
+        render json: {"message": "Bye."}
+    end
+    
     def sessiontest
         if session[:logged_in]
             render json: {"SUCCESSS": "SESSION IS TRUE"}
