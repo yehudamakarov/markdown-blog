@@ -22,5 +22,4 @@ class SessionsController < ApplicationController
             render json: {"opps": "for session test"}, status: 403
         end
     end
-    
 end
