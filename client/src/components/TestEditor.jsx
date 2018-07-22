@@ -2,8 +2,9 @@ import * as React from "react";
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import 'react-mde/lib/styles/css/react-mde-all.css';
+import { connect } from "react-redux";
 
-export default class MarkdownEditor extends React.Component {
+class MarkdownEditor extends React.Component {
 
     constructor(props) {
         super(props);
@@ -19,6 +20,29 @@ export default class MarkdownEditor extends React.Component {
         this.setState({ mdeState });
     }
 
+    handleCorrectTags = () => {
+        const { images } = this.props;
+        const regex = /\(resources([^\)]+)\)/g;
+        const correctedMarkdown = this.state.mdeState.markdown.replace(
+            regex,
+            (match) => {
+                const correspondingImageObject = images.find((imageObject) => {
+                    return match === `(resources/${Object.keys(imageObject)[0]})`
+                })
+                if (correspondingImageObject) {
+                    return `(${correspondingImageObject[Object.keys(correspondingImageObject)[0]]})`
+                } else {
+                    return match;
+                }
+            }
+        );
+        this.setState({
+            mdeState: {
+                markdown: correctedMarkdown
+            }
+        });
+    }
+
     render() {
         return (
             <div className="container">
@@ -32,9 +56,17 @@ export default class MarkdownEditor extends React.Component {
                     generateMarkdownPreview={(markdown) => Promise.resolve(this.converter.makeHtml(markdown))}
                 />
                 <div>
-                    
+                    <button onClick={this.handleCorrectTags}>Correct Tags</button>
                 </div>
             </div>
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        images: state.imagesForPost
+    }
+}
+
+export default connect(mapStateToProps)(MarkdownEditor);
