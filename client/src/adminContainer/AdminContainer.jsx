@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import Logout from './Logout';
-import Dashboard from './Dashboard'
+import Dashboard from './components/new/Dashboard'
 import { connect } from 'react-redux';
 
 export class AdminContainer extends Component {
@@ -9,7 +8,6 @@ export class AdminContainer extends Component {
     return (
       <div>
         <Dashboard />
-        <Logout/>       
       </div>
     )
   }

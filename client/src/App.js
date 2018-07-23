@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import PublicContainer from './publicContainer/PublicContainer'
 import AdminContainer from './adminContainer/AdminContainer'
-import Login from './adminContainer/Login';
-import PrivateRoute from './adminContainer/PrivateRoute';
+import Login from './adminContainer/components/Login';
+import PrivateRoute from './adminContainer/utilities/PrivateRoute';
 import { 
   BrowserRouter as Router,
   Route,

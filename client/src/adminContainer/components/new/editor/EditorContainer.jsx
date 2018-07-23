@@ -3,6 +3,7 @@ import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import 'react-mde/lib/styles/css/react-mde-all.css';
 import { connect } from "react-redux";
+import ImageUploader from "./ImageUploader";
 
 class MarkdownEditor extends React.Component {
 
@@ -55,6 +56,9 @@ class MarkdownEditor extends React.Component {
                     editorState={this.state.mdeState}
                     generateMarkdownPreview={(markdown) => Promise.resolve(this.converter.makeHtml(markdown))}
                 />
+                <div>
+                    <ImageUploader />
+                </div>
                 <div>
                     <button onClick={this.handleCorrectTags}>Correct Tags</button>
                 </div>

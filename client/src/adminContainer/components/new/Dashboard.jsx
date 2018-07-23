@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import MyUploader from '../components/TestUploader'
-import MarkdownEditor from '../components/TestEditor';
+import MarkdownEditor from './editor/EditorContainer';
+import Logout from '../Logout';
+
 
 export default class Dashboard extends Component {
   render() {
@@ -8,7 +9,7 @@ export default class Dashboard extends Component {
       <div>
         <h3>Admin Dashboard</h3>
         <MarkdownEditor />
-        <MyUploader/>
+        <Logout/>       
       </div>
     )
   }

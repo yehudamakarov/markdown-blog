@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Dropzone from 'react-dropzone'
 import { connect } from 'react-redux';
-import imageUploadAction from '../store/actions/imageUploadAction'
+import imageUploadAction from '../../../../store/actions/imageUploadAction';
 
 // upload button
   // use state to dispatch an action with this state (array of objects).

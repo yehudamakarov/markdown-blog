@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logoutAction } from "../store/actions/loginAction";
+import { logoutAction } from "../../store/actions/loginAction";
 
 const Logout = withRouter(({ history, isLoggedIn, logoutAction }) => (
     isLoggedIn === true
