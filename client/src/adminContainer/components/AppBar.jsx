@@ -1,74 +1,51 @@
+import Dashboard from '../components/new/Dashboard'
+import PublicContainer from '../../publicContainer/PublicContainer';
+import Logout from '../components/Logout'
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Dashboard from '../components/new/Dashboard'
-import PublicContainer from '../../publicContainer/PublicContainer';
-import Button from '@material-ui/core/Button';
-import Logout from '../components/Logout'
 import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-const styles = theme => ({
+const styles = {
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+  },
+  flex: {
+    flexGrow: 1,
   },
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
   },
-});
+};
 
-class SimpleTabs extends React.Component {
-  state = {
-    value: 0,
-  };
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
-  render() {
-    const { classes } = this.props;
-    const { value } = this.state;
-
-    return (
-      <div className={classes.root}>
-        <AppBar position="static">
-            <Toolbar>
-                <Tabs value={value} onChange={this.handleChange}>
-                    <Tab label="New" />
-                    <Tab label="Edit" />
-                </Tabs>
-                <Button>
-                    <Logout />
-                </Button>
-            </Toolbar>
-        </AppBar>
-        {value === 0 && <TabContainer><Dashboard /></TabContainer>}
-        {value === 1 && <TabContainer><PublicContainer /></TabContainer>}
-      </div>
-    );
-  }
+function ButtonAppBar(props) {
+  const { classes } = props;
+  return (
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="title" color="inherit" className={classes.flex}>
+            News
+          </Typography>
+          <Logout />
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
 }
 
-SimpleTabs.propTypes = {
+ButtonAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleTabs);
+export default withStyles(styles)(ButtonAppBar);
