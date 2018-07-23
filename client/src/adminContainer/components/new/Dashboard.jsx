@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import MarkdownEditor from './editor/EditorContainer';
-import Logout from '../Logout';
 
 
 export default class Dashboard extends Component {
@@ -9,7 +8,6 @@ export default class Dashboard extends Component {
       <div>
         <h3>Admin Dashboard</h3>
         <MarkdownEditor />
-        <Logout/>       
       </div>
     )
   }
