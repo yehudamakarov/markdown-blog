@@ -135,7 +135,7 @@ class ImageUploader extends Component {
             overflow: 'hidden',
           }
         }>
-          <GridList style={{flexWrap: 'nowrap', transform: 'translateZ(0)',}} cols={3.5}>
+          <GridList style={{flexWrap: 'nowrap', transform: 'translateZ(0)',}} cols={2.5}>
             {this.state.imageFiles.map((fileObject, index) => 
               <GridListTile key={index}>
                 <img src={fileObject.preview} />
