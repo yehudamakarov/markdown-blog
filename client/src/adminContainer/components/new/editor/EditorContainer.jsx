@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { Fragment } from "react";
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import 'react-mde/lib/styles/css/react-mde-all.css';
@@ -46,7 +46,7 @@ class MarkdownEditor extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <Fragment>
                 <ReactMde
                     buttonContentOptions={{
                         iconProvider: name => <i className={`fas fa-${name} fa-1x`} aria-hidden="true"/>,
@@ -58,7 +58,7 @@ class MarkdownEditor extends React.Component {
                 />
                 <ImageUploader />
                 <button onClick={this.handleCorrectTags}>Correct Tags</button>
-            </div>
+            </Fragment>
         );
     }
 }
