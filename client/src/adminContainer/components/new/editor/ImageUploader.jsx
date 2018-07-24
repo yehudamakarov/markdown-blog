@@ -39,13 +39,13 @@ class ImageUploader extends Component {
   }
 
   onDrop = (acceptedFiles) => {
+    this.setState({
+      imageFiles: [
+          ...this.state.imageFiles,
+          ...acceptedFiles
+      ]
+    });
     acceptedFiles.forEach(fileObject => {
-      this.setState({
-        imageFiles: [
-            ...this.state.imageFiles,
-            fileObject
-        ]
-      });
       // reject anything that is not an image
       const reader = new FileReader();
 
@@ -122,36 +122,37 @@ class ImageUploader extends Component {
             </Dropzone>
           </Grid>
           <Grid item sm={6}>
-              <Button fullWidth={true} variant='contained' color='primary' onClick={this.handleUploadClick}>Try Upload</Button>
+              <Button fullWidth={true} variant='contained' color='primary' onClick={this.handleUploadClick}>Upload</Button>
           </Grid>
         </Grid>
         <hr/>
         <Typography variant='title'>Images To Upload:</Typography>
-        <GridList>
-          {this.state.imageFiles.map((fileObject, index) => 
-              
-            <GridListTile style={{maxWidth: '18%'}} key={index}>
-              <Paper>
-              <hr/>
-                <Typography variant='button'>
-                  File Name: 
-                </Typography>
-                <Typography variant='subheading'>
-                  {fileObject.name}
-                </Typography>
-              <hr/>
-                <Typography variant='button'>
-                  File Size: 
-                </Typography>
-                <Typography variant='subheading'>
-                  {fileObject.size} bytes
-                </Typography>
-              </Paper>
-              <GridListTileBar/>
-            </GridListTile>
-            )
+        <div style={
+          {
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around',
+            overflow: 'hidden',
           }
-        </GridList>
+        }>
+          <GridList style={{flexWrap: 'nowrap', transform: 'translateZ(0)',}} cols={3.5}>
+            {this.state.imageFiles.map((fileObject, index) => 
+              <GridListTile key={index}>
+                <img src={fileObject.preview} />
+                <GridListTileBar
+                  title={fileObject.name}
+                  style={{
+                    background: '#4dabf5',
+                  }}
+                  actionIcon={
+                    <ImagePopover onClick={(event) => this.handlePictureRemove(index)} src={fileObject.preview} />
+                  }
+                />
+              </GridListTile>
+              )
+            }
+          </GridList>
+        </div>
       </Paper>
     )
   }
@@ -165,3 +166,20 @@ export default connect(null, { imageUploadAction })(ImageUploader)
 //                 <Button size='small' variant='contained' color='primary' >
 //                   <ImagePopover src={fileObject.preview} />
 //                 </Button>
+
+// <Paper>
+//               <hr/>
+//                 <Typography variant='button'>
+//                   File Name: 
+//                 </Typography>
+//                 <Typography variant='subheading'>
+//                   {fileObject.name}
+//                 </Typography>
+//               <hr/>
+//                 <Typography variant='button'>
+//                   File Size: 
+//                 </Typography>
+//                 <Typography variant='subheading'>
+//                   {fileObject.size} bytes
+//                 </Typography>
+//               </Paper>

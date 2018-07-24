@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import IconButton from '@material-ui/core/IconButton';
+
 
 const styles = theme => ({
-  popover: {
-    pointerEvents: 'none',
-  },
-  paper: {
-    padding: theme.spacing.unit,
-  },
+    popover: {
+        pointerEvents: 'none',
+    },
+    paper: {
+        padding: theme.spacing.unit,
+        width: '400px'
+    },
 });
 
 class MouseOverPopover extends React.Component {
@@ -27,15 +31,13 @@ class MouseOverPopover extends React.Component {
   };
 
   render() {
-    const { classes, src} = this.props;
+    const { classes, src, onClick} = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     return (
-      <div>
-        <Typography onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose}>
-          Preview
-        </Typography>
+      <IconButton onClick={onClick}>
+        <DeleteOutlineIcon onMouseEnter={this.handlePopoverOpen} onMouseLeave={this.handlePopoverClose} />
         <Popover
           className={classes.popover}
           classes={{
@@ -45,7 +47,7 @@ class MouseOverPopover extends React.Component {
           anchorEl={anchorEl}
           anchorOrigin={{
             vertical: 'top',
-            horizontal: 'left',
+            horizontal: 'right',
           }}
           transformOrigin={{
             vertical: 'bottom',
@@ -54,9 +56,9 @@ class MouseOverPopover extends React.Component {
           onClose={this.handlePopoverClose}
           disableRestoreFocus
         >
-          <img style={{maxWidth: '300px'}} src={src} />
+          <img style={{maxWidth: '100%', height: 'auto'}} src={src} />
         </Popover>
-      </div>
+      </IconButton>
     );
   }
 }
