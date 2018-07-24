@@ -12,14 +12,12 @@ import {
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div>
         <Router>
           <Fragment>
-            <Link to='/admin'>Admin</Link>
-            <Link to='/login'>Login</Link>
-            <Link to='/'>Home</Link>
             <Route exact path='/' component={PublicContainer} />
-            <PrivateRoute exact path='/admin' component={AdminContainer} />
+            { /*<PrivateRoute exact path='/admin' component={AdminContainer} /> */}
+            <Route exact path='/admin' component={AdminContainer} />
             <Route exact path='/login' component={Login} />
           </Fragment>
         </Router>

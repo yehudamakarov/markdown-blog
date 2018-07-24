@@ -56,12 +56,8 @@ class MarkdownEditor extends React.Component {
                     editorState={this.state.mdeState}
                     generateMarkdownPreview={(markdown) => Promise.resolve(this.converter.makeHtml(markdown))}
                 />
-                <div>
-                    <ImageUploader />
-                </div>
-                <div>
-                    <button onClick={this.handleCorrectTags}>Correct Tags</button>
-                </div>
+                <ImageUploader />
+                <button onClick={this.handleCorrectTags}>Correct Tags</button>
             </div>
         );
     }
