@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 import Dashboard from '../components/new/Dashboard';
 import PublicContainer from '../../publicContainer/PublicContainer';
@@ -49,24 +50,32 @@ class SimpleTabs extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar position="static">
-          <Toolbar>
-              <Tabs className={classes.flex} value={value} onChange={this.handleChange}>
-                <Tab label="New" />
-                <Tab label="Edit" />
-              </Tabs>
-              <Logout />
-          </Toolbar>
+          <Grid container justify='center'>
+            <Grid item sm='10'>
+              <Toolbar>
+                  <Tabs className={classes.flex} value={value} onChange={this.handleChange}>
+                    <Tab label="New" />
+                    <Tab label="Edit" />
+                  </Tabs>
+                  <Logout />
+              </Toolbar>
+            </Grid>
+          </Grid>
         </AppBar>
-        {value === 0 && 
-            <TabContainer>
-                <Dashboard />
-            </TabContainer>
-        }
-        {value === 1 && 
-            <TabContainer>
-                <PublicContainer />
-            </TabContainer>
-        }
+        <Grid container justify='center'>
+          <Grid item sm='10'>
+            {value === 0 && 
+                <TabContainer>
+                    <Dashboard />
+                </TabContainer>
+            }
+            {value === 1 && 
+                <TabContainer>
+                    <PublicContainer />
+                </TabContainer>
+            }
+          </Grid>
+        </Grid>
       </div>
     );
   }

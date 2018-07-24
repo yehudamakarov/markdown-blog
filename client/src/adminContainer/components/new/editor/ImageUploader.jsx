@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import imageUploadAction from '../../../../store/actions/imageUploadAction';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 
 // upload button
@@ -25,11 +26,18 @@ class TestUploader extends Component {
     super(props);
     this.state = {
       images: [],
+      imageFiles: [],
     }
   }
 
   onDrop = (acceptedFiles) => {
     acceptedFiles.forEach(fileObject => {
+      this.setState({
+        imagesFiles: [
+            ...this.state.imageFiles,
+            fileObject
+        ]
+      });
       // reject anything that is not an image
       const reader = new FileReader();
 
@@ -39,11 +47,11 @@ class TestUploader extends Component {
           [fileObject.name]: base64ToUpload
         };
         this.setState({
-            images: [
+          images: [
               ...this.state.images,
               imageObjectForState
-            ]
-          });
+          ]
+        });
       }
 
       reader.readAsDataURL(fileObject);
@@ -72,6 +80,7 @@ class TestUploader extends Component {
       <Grid container>
         <Grid item sm >
           <Dropzone style={this.dropzoneStyle} activeStyle={this.dropzoneStyleActive} onDrop={this.onDrop}>
+            <Typography variant='button'>Drop Image Files here</Typography>
           </Dropzone>
         </Grid>
         <Grid item sm >
