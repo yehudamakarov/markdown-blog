@@ -51,7 +51,7 @@ class SimpleTabs extends React.Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Grid container justify='center'>
-            <Grid item sm='10'>
+            <Grid item sm={10}>
               <Toolbar>
                   <Tabs className={classes.flex} value={value} onChange={this.handleChange}>
                     <Tab label="New" />
@@ -63,7 +63,7 @@ class SimpleTabs extends React.Component {
           </Grid>
         </AppBar>
         <Grid container justify='center'>
-          <Grid item sm='10'>
+          <Grid item sm={10}>
             {value === 0 && 
                 <TabContainer>
                     <Dashboard />

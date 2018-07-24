@@ -2,9 +2,38 @@ import React, { Fragment } from "react";
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import 'react-mde/lib/styles/css/react-mde-all.css';
+import './customEditorStyle.css'
 import { connect } from "react-redux";
 import ImageUploader from "./ImageUploader";
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import FormatBold from '@material-ui/icons/FormatBold';
+import FormatSize from '@material-ui/icons/FormatSize';
+import FormatItalic from '@material-ui/icons/FormatItalic';
+import FormatStrikethrough from '@material-ui/icons/FormatStrikethrough';
+import InsertLink from '@material-ui/icons/InsertLink';
+import FormatQuote from '@material-ui/icons/FormatQuote';
+import Code from '@material-ui/icons/Code';
+import InsertPhoto from '@material-ui/icons/InsertPhoto';
+import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
+import FormatListNumbered from '@material-ui/icons/FormatListNumbered';
+import CheckBox from '@material-ui/icons/CheckBox';
 
+const icons = {
+    bold: <FormatBold />,
+    heading: <FormatSize />,
+    italic: <FormatItalic />,
+    strikethrough: <FormatStrikethrough />,
+    link: <InsertLink />,
+    'quote-right': <FormatQuote />,
+    code: <Code />,
+    image: <InsertPhoto />,
+    'list-ul': <FormatListBulleted />,
+    'list-ol': <FormatListNumbered />,
+    tasks: <CheckBox />,
+  };
+  
 class MarkdownEditor extends React.Component {
 
     constructor(props) {
@@ -47,17 +76,25 @@ class MarkdownEditor extends React.Component {
     render() {
         return (
             <Fragment>
-                <ReactMde
-                    buttonContentOptions={{
-                        iconProvider: name => <i className={`fas fa-${name} fa-1x`} aria-hidden="true"/>,
-                    }}
-                    layout='horizontal'
-                    onChange={this.handleValueChange}
-                    editorState={this.state.mdeState}
-                    generateMarkdownPreview={(markdown) => Promise.resolve(this.converter.makeHtml(markdown))}
-                />
-                <ImageUploader />
-                <button onClick={this.handleCorrectTags}>Correct Tags</button>
+                <Grid container direction='column' spacing={16} justify='flex-start'>
+                    <Grid item>
+                        <ReactMde
+                            buttonContentOptions={{
+                                iconProvider: name => icons[name]
+                            }}
+                            layout='horizontal'
+                            onChange={this.handleValueChange}
+                            editorState={this.state.mdeState}
+                            generateMarkdownPreview={(markdown) => Promise.resolve(this.converter.makeHtml(markdown))}
+                        />
+                    </Grid>
+                    <Grid item sm>
+                        <ImageUploader />
+                    </Grid>
+                    <Grid item>
+                        <Button fullWidth={true} variant='contained' color='primary' onClick={this.handleCorrectTags}>Correct Tags</Button>
+                    </Grid>
+                </Grid>
             </Fragment>
         );
     }
