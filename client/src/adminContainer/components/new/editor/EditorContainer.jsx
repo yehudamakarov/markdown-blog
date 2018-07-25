@@ -6,9 +6,10 @@ import './customEditorStyle.css'
 import { connect } from "react-redux";
 import ImageUploader from "./ImageUploader";
 import removeImagesWithUrlAction from '../../../../store/actions/removeImagesWithUrlAction';
+import ChipInput from 'material-ui-chip-input'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField'
 import FormatBold from '@material-ui/icons/FormatBold';
 import FormatSize from '@material-ui/icons/FormatSize';
 import FormatItalic from '@material-ui/icons/FormatItalic';
@@ -21,19 +22,20 @@ import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
 import FormatListNumbered from '@material-ui/icons/FormatListNumbered';
 import CheckBox from '@material-ui/icons/CheckBox';
 
-const resizeStyle = { fontSize: '2.6em' }
+const resizeIcons = { fontSize: '2.1em' }
+
 const icons = {
-    bold: <FormatBold style={resizeStyle} />,
-    heading: <FormatSize style={resizeStyle} />,
-    italic: <FormatItalic style={resizeStyle} />,
-    strikethrough: <FormatStrikethrough style={resizeStyle} />,
-    link: <InsertLink style={resizeStyle} />,
-    'quote-right': <FormatQuote style={resizeStyle} />,
-    code: <Code style={resizeStyle} />,
-    image: <InsertPhoto style={resizeStyle} />,
-    'list-ul': <FormatListBulleted style={resizeStyle} />,
-    'list-ol': <FormatListNumbered style={resizeStyle} />,
-    tasks: <CheckBox style={resizeStyle} />,
+    bold: <FormatBold style={resizeIcons} />,
+    heading: <FormatSize style={resizeIcons} />,
+    italic: <FormatItalic style={resizeIcons} />,
+    strikethrough: <FormatStrikethrough style={resizeIcons} />,
+    link: <InsertLink style={resizeIcons} />,
+    'quote-right': <FormatQuote style={resizeIcons} />,
+    code: <Code style={resizeIcons} />,
+    image: <InsertPhoto style={resizeIcons} />,
+    'list-ul': <FormatListBulleted style={resizeIcons} />,
+    'list-ol': <FormatListNumbered style={resizeIcons} />,
+    tasks: <CheckBox style={resizeIcons} />,
   };
   
 class MarkdownEditor extends React.Component {
@@ -44,10 +46,12 @@ class MarkdownEditor extends React.Component {
             mdeState: {
                 markdown: '# Enter markdown post...',
             },
+            title: '',
+            description: '',
+            tags: []
             
         };
         this.converter = new Showdown.Converter({tables: true, simplifiedAutoLink: true});
-        this.tagsLeftToChange = 0;
     }
 
     handleValueChange = (mdeState) => {
@@ -74,16 +78,74 @@ class MarkdownEditor extends React.Component {
             mdeState: {
                 markdown: correctedMarkdown
             }
-        },(result) => {
+        },() => {
             if (this.state.mdeState.markdown.match(regex)) {
                 this.tagsLeftToChange = this.state.mdeState.markdown.match(regex).length
             }
         });
     }
 
+    handleFormChange = ({ target }) => {
+        this.setState({
+            ...this.state,
+            [target.name]: target.value
+        })
+    }
+
+    handleAddTag = tag => {
+        this.setState({
+            ...this.state,
+            tags: [
+                ...this.state.tags,
+                tag
+            ]
+        })
+    }
+
+    handleDeleteTag = (tag, index) => {
+        this.setState({
+            ...this.state,
+            tags: [
+                ...this.state.tags.slice(0, index),
+                ...this.state.tags.slice(index + 1)
+            ]
+        })
+    }
+
     render() {
         return (
             <Fragment>
+                <Grid container direction='row' spacing={16}>
+                    <Grid item sm={6}>
+                        <form>
+                            <TextField
+                                onChange={this.handleFormChange}
+                                name='title'
+                                style={{marginRight: '3vh', width: '90%'}}
+                                label='Title'
+                            />
+                            <TextField
+                                onChange={this.handleFormChange}
+                                name='description'
+                                style={{marginRight: '3vh', marginTop: '3vh', marginBottom: '3vh', width: '90%' }}
+                                label="Description"
+                                multiline
+                                rowsMax="4"
+                            />
+                            <ChipInput
+                                style={{marginRight: '3vh', marginTop: '3vh', marginBottom: '3vh', width: '90%' }}
+                                value={this.state.tags}
+                                label='Tags'
+                                shrink={true}
+                                onAdd={(tag) => this.handleAddTag(tag)}
+                                onDelete={(tag, index) => this.handleDeleteTag(tag, index)}
+                            />
+                        </form>
+                    </Grid>
+                    <Grid item sm={6}>
+
+                    </Grid>
+                </Grid>
                 <Grid container direction='column' spacing={16} >
                     <Grid item>
                         <ReactMde
@@ -97,10 +159,10 @@ class MarkdownEditor extends React.Component {
                         />
                     </Grid>
                     <Grid item>
-                        <ImageUploader />
+                        <Button fullWidth={true} variant='contained' color='primary' onClick={this.handleCorrectTags}>Correct Tags</Button>
                     </Grid>
                     <Grid item>
-                        <Button fullWidth={true} variant='contained' color='primary' onClick={this.handleCorrectTags}>Correct Tags</Button>
+                        <ImageUploader />
                     </Grid>
                 </Grid>
             </Fragment>
