@@ -21,18 +21,19 @@ import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
 import FormatListNumbered from '@material-ui/icons/FormatListNumbered';
 import CheckBox from '@material-ui/icons/CheckBox';
 
+const resizeStyle = { fontSize: '2.6em' }
 const icons = {
-    bold: <FormatBold />,
-    heading: <FormatSize />,
-    italic: <FormatItalic />,
-    strikethrough: <FormatStrikethrough />,
-    link: <InsertLink />,
-    'quote-right': <FormatQuote />,
-    code: <Code />,
-    image: <InsertPhoto />,
-    'list-ul': <FormatListBulleted />,
-    'list-ol': <FormatListNumbered />,
-    tasks: <CheckBox />,
+    bold: <FormatBold style={resizeStyle} />,
+    heading: <FormatSize style={resizeStyle} />,
+    italic: <FormatItalic style={resizeStyle} />,
+    strikethrough: <FormatStrikethrough style={resizeStyle} />,
+    link: <InsertLink style={resizeStyle} />,
+    'quote-right': <FormatQuote style={resizeStyle} />,
+    code: <Code style={resizeStyle} />,
+    image: <InsertPhoto style={resizeStyle} />,
+    'list-ul': <FormatListBulleted style={resizeStyle} />,
+    'list-ol': <FormatListNumbered style={resizeStyle} />,
+    tasks: <CheckBox style={resizeStyle} />,
   };
   
 class MarkdownEditor extends React.Component {
