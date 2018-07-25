@@ -1,6 +1,6 @@
-const imageReducer = (state = [], action) => {
+const imagesWithUrlReducer = (state = [], action) => {
     switch (action.type) {
-    case 'ADD_IMAGE':
+    case 'ADD_IMAGE_WITH_URL':
         return [
                 ...state,
                 action.payload
@@ -9,4 +9,4 @@ const imageReducer = (state = [], action) => {
         return state;
     }
 }
-export default imageReducer;
+export default imagesWithUrlReducer;

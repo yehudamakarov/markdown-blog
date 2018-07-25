@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import Dropzone from 'react-dropzone'
 import { connect } from 'react-redux';
 import imageUploadAction from '../../../../store/actions/imageUploadAction';
@@ -13,6 +13,8 @@ import ImagePopover from './ImagePopover';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import addPreviewAndBase64ImageAction from '../../../../store/actions/addPreviewAndBase64ImageAction';
+import removeImageFromPreviewAndBase64Action from '../../../../store/actions/removeImageFromPreviewAndBase64Action';
 
 
 // upload button
@@ -30,36 +32,20 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 // upload the post
 
 class ImageUploader extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      images: [],
-      imageFiles: [],
-    }
-  }
 
   onDrop = (acceptedFiles) => {
-    this.setState({
-      imageFiles: [
-          ...this.state.imageFiles,
-          ...acceptedFiles
-      ]
-    });
-    acceptedFiles.forEach(fileObject => {
+    acceptedFiles.forEach((fileObject, index, array) => {
       // reject anything that is not an image
       const reader = new FileReader();
 
       reader.onload = ({ target: reader }) => {
-        let base64ToUpload = reader.result.replace('data:image/png;base64,', '')
-        const imageObjectForState = {
-          [fileObject.name]: base64ToUpload
+        const base64ToUpload = reader.result.replace('data:image/png;base64,', '')
+        const imageObjectWithPreviewAndBase64 = {
+          [fileObject.name]: base64ToUpload,
+          preview: fileObject.preview,
         };
-        this.setState({
-          images: [
-              ...this.state.images,
-              imageObjectForState
-          ]
-        });
+        console.log('imageObjectWithPreviewAndBase64 :', imageObjectWithPreviewAndBase64);
+        this.props.addPreviewAndBase64ImageAction(imageObjectWithPreviewAndBase64);
       }
 
       reader.readAsDataURL(fileObject);
@@ -67,20 +53,12 @@ class ImageUploader extends Component {
   }
 
   handleUploadClick = (event) => {
-    this.props.imageUploadAction(this.state.images);
+    this.props.imageUploadAction(this.props.imagesWithPreviewAndBase64);
   }
 
   handlePictureRemove = (index) => {
-    this.setState({
-      images: [
-        ...this.state.images.slice(0, index),
-        ...this.state.images.slice(index + 1)
-      ],
-      imageFiles: [
-        ...this.state.imageFiles.slice(0, index),
-        ...this.state.imageFiles.slice(index + 1)
-      ]
-    })
+    this.props.removeImageFromPreviewAndBase64Action(index);
+;
   }
 
   dropzoneStyle = {
@@ -126,26 +104,30 @@ class ImageUploader extends Component {
           </Grid>
         </Grid>
         <hr/>
-        <Typography variant='title'>Images To Upload:</Typography>
+        <Fragment>
+          <Typography variant='title'>Images To Upload:</Typography>
+        </Fragment>
         <div style={
           {
             display: 'flex',
             flexWrap: 'wrap',
-            justifyContent: 'space-around',
+            justifyContent: 'flex-start',
             overflow: 'hidden',
           }
         }>
-          <GridList style={{flexWrap: 'nowrap', transform: 'translateZ(0)',}} cols={2.5}>
-            {this.state.imageFiles.map((fileObject, index) => 
-              <GridListTile key={index}>
-                <img src={fileObject.preview} />
+          <GridList style={{flexWrap: 'nowrap', transform: 'translateZ(0)',}} cols={2.2}>
+            {this.props.imagesWithPreviewAndBase64.map((imageObject, index) => 
+              <GridListTile key={index} rows={1.7}>
+                <img src={imageObject.preview} />
                 <GridListTileBar
-                  title={fileObject.name}
+                  title={Object.keys(imageObject).find((imageObjectKey) => {
+                    return imageObjectKey !== 'preview'
+                  })}
                   style={{
                     background: '#4dabf5',
                   }}
                   actionIcon={
-                    <ImagePopover onClick={(event) => this.handlePictureRemove(index)} src={fileObject.preview} />
+                    <ImagePopover onClick={(event) => this.handlePictureRemove(index)} src={imageObject.preview} />
                   }
                 />
               </GridListTile>
@@ -158,28 +140,11 @@ class ImageUploader extends Component {
   }
 }
 
-export default connect(null, { imageUploadAction })(ImageUploader)
+const mapStateToProps = (state) => {
+  return {
+    imagesWithUrl: state.imagesWithUrl,
+    imagesWithPreviewAndBase64: state.imagesWithPreviewAndBase64,
+  }
+}
 
-// <Button onClick={(event) => this.handlePictureRemove(index)} size='small' variant='contained' color='secondary'>
-//                   Remove
-//                 </Button>
-//                 <Button size='small' variant='contained' color='primary' >
-//                   <ImagePopover src={fileObject.preview} />
-//                 </Button>
-
-// <Paper>
-//               <hr/>
-//                 <Typography variant='button'>
-//                   File Name: 
-//                 </Typography>
-//                 <Typography variant='subheading'>
-//                   {fileObject.name}
-//                 </Typography>
-//               <hr/>
-//                 <Typography variant='button'>
-//                   File Size: 
-//                 </Typography>
-//                 <Typography variant='subheading'>
-//                   {fileObject.size} bytes
-//                 </Typography>
-//               </Paper>
+export default connect(mapStateToProps, { imageUploadAction, addPreviewAndBase64ImageAction, removeImageFromPreviewAndBase64Action })(ImageUploader)

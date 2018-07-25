@@ -2,5 +2,8 @@
     background: #4dabf5;
 }
 .react-mde {
-    height: 67vh;
-  }
+    height: 49vh;
+}
+.mde-preview .mde-preview-content img {
+    max-width: 100%;
+}

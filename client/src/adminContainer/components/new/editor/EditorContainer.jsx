@@ -5,6 +5,7 @@ import 'react-mde/lib/styles/css/react-mde-all.css';
 import './customEditorStyle.css'
 import { connect } from "react-redux";
 import ImageUploader from "./ImageUploader";
+import removeImagesWithUrlAction from '../../../../store/actions/removeImagesWithUrlAction';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -42,8 +43,10 @@ class MarkdownEditor extends React.Component {
             mdeState: {
                 markdown: '# Enter markdown post...',
             },
+            
         };
         this.converter = new Showdown.Converter({tables: true, simplifiedAutoLink: true});
+        this.tagsLeftToChange = 0;
     }
 
     handleValueChange = (mdeState) => {
@@ -51,12 +54,12 @@ class MarkdownEditor extends React.Component {
     }
 
     handleCorrectTags = () => {
-        const { images } = this.props;
+        const { imagesWithUrl } = this.props;
         const regex = /\(resources([^\)]+)\)/g;
         const correctedMarkdown = this.state.mdeState.markdown.replace(
             regex,
             (match) => {
-                const correspondingImageObject = images.find((imageObject) => {
+                const correspondingImageObject = imagesWithUrl.find((imageObject) => {
                     return match === `(resources/${Object.keys(imageObject)[0]})`
                 })
                 if (correspondingImageObject) {
@@ -70,13 +73,17 @@ class MarkdownEditor extends React.Component {
             mdeState: {
                 markdown: correctedMarkdown
             }
+        },(result) => {
+            if (this.state.mdeState.markdown.match(regex)) {
+                this.tagsLeftToChange = this.state.mdeState.markdown.match(regex).length
+            }
         });
     }
 
     render() {
         return (
             <Fragment>
-                <Grid container direction='column' spacing={16} justify='flex-start'>
+                <Grid container direction='column' spacing={16} >
                     <Grid item>
                         <ReactMde
                             buttonContentOptions={{
@@ -102,8 +109,8 @@ class MarkdownEditor extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        images: state.imagesForPost
+        imagesWithUrl: state.imagesWithUrl
     }
 }
 
-export default connect(mapStateToProps)(MarkdownEditor);
+export default connect(mapStateToProps, { removeImagesWithUrlAction })(MarkdownEditor);

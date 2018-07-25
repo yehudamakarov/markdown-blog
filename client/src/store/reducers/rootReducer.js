@@ -1,11 +1,13 @@
 import { combineReducers } from "redux";
 import loginReducer from './loginReducer';
-import imageReducer from './imageReducer';
+import imagesWithUrlReducer from './imagesWithUrlReducer';
+import imagesWithPreviewAndBase64Reducer from './imagesWithPreviewAndBase64Reducer';
 
 const rootReducer = combineReducers(
     {
         auth: loginReducer,
-        imagesForPost: imageReducer,
+        imagesWithPreviewAndBase64: imagesWithPreviewAndBase64Reducer,
+        imagesWithUrl: imagesWithUrlReducer,
     }
 )
 

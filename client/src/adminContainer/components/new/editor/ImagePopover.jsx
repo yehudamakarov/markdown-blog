@@ -13,7 +13,7 @@ const styles = theme => ({
     },
     paper: {
         padding: theme.spacing.unit,
-        width: '400px'
+        maxWidth: '49%'
     },
 });
 
