@@ -1,4 +1,5 @@
 import axios from 'axios';
+import getId from '../../id'
 
 // this function will receive an array of objects.
 // each objects's key is the file name, and the store needs the objects to have
@@ -17,7 +18,7 @@ const imageUploadAction = (imagesWithPreviewAndBase64) => {
                   'image': base64,
                 },
                 headers: {
-                  'Authorization': 'Client-ID 9ff2cbb10ead695',
+                  'Authorization': `Client-ID ${getId()}`,
                 }
               }).then((resp) => {
                     const imageObjectWithUrl = {
