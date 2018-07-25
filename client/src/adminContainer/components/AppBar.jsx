@@ -14,7 +14,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 function TabContainer(props) {
   return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
+    <Typography component="div" style={{ padding: 24 }}>
       {props.children}
     </Typography>
   );
@@ -80,9 +80,5 @@ class SimpleTabs extends React.Component {
     );
   }
 }
-
-SimpleTabs.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(SimpleTabs);

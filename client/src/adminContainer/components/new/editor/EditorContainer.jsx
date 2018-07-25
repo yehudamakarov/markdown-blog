@@ -96,7 +96,7 @@ class MarkdownEditor extends React.Component {
                             generateMarkdownPreview={(markdown) => Promise.resolve(this.converter.makeHtml(markdown))}
                         />
                     </Grid>
-                    <Grid item sm>
+                    <Grid item>
                         <ImageUploader />
                     </Grid>
                     <Grid item>

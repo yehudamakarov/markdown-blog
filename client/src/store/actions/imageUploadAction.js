@@ -1,16 +1,15 @@
 import axios from 'axios';
 import getId from '../../id'
 
-// this function will receive an array of objects.
-// each objects's key is the file name, and the store needs the objects to have
-// values of the new URL of the image.
-
 const imageUploadAction = (imagesWithPreviewAndBase64) => {
     return (dispatch, getState) => {
         imagesWithPreviewAndBase64.forEach(imageObjectWithPreviewAndBase64 => {
+            // Get the Base 64 string out of the object
             const base64 = imageObjectWithPreviewAndBase64[Object.keys(imageObjectWithPreviewAndBase64).find((imageObjectKey) => {
                 return imageObjectKey !== 'preview'
             })];
+            // Post to Imgur, then put a new object in the store that has the
+            // Url in it
             axios({
                 method: 'post',
                 url: 'https://api.imgur.com/3/image',
@@ -32,8 +31,6 @@ const imageUploadAction = (imagesWithPreviewAndBase64) => {
                     });
                 }).then(() => {
                     const index = getState().imagesWithPreviewAndBase64.findIndex((imageWithPreviewAndBase64) => {
-                        console.log('imageWithPreviewAndBase64 :', imageWithPreviewAndBase64);
-                        console.log('imageObjectWithPreviewAndBase64 :', imageObjectWithPreviewAndBase64);
                         return imageObjectWithPreviewAndBase64.preview === imageWithPreviewAndBase64.preview
                     })
                     dispatch({
