@@ -5,6 +5,7 @@ import 'react-mde/lib/styles/css/react-mde-all.css';
 import './customEditorStyle.css'
 import { connect } from "react-redux";
 import ImageUploader from "./ImageUploader";
+import CoverImageUploader from './CoverImageUploader'
 import removeImagesWithUrlAction from '../../../../store/actions/removeImagesWithUrlAction';
 import ChipInput from 'material-ui-chip-input'
 import Button from '@material-ui/core/Button';
@@ -127,13 +128,13 @@ class MarkdownEditor extends React.Component {
                             <TextField
                                 onChange={this.handleFormChange}
                                 name='description'
-                                style={{marginRight: '3vh', marginTop: '3vh', marginBottom: '3vh', width: '90%' }}
+                                style={{marginRight: '3vh', marginTop: '3vh', width: '90%' }}
                                 label="Description"
                                 multiline
                                 rowsMax="4"
                             />
                             <ChipInput
-                                style={{marginRight: '3vh', marginTop: '3vh', marginBottom: '3vh', width: '90%' }}
+                                style={{marginRight: '3vh',marginTop: '3vh',  marginBottom: '3vh', width: '90%' }}
                                 value={this.state.tags}
                                 label='Tags'
                                 shrink={true}
@@ -143,7 +144,7 @@ class MarkdownEditor extends React.Component {
                         </form>
                     </Grid>
                     <Grid item sm={6}>
-
+                        <CoverImageUploader />
                     </Grid>
                 </Grid>
                 <Grid container direction='column' spacing={16} >
