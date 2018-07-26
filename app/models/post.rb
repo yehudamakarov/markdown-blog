@@ -6,7 +6,8 @@ class Post < ApplicationRecord
     
     def self.new_from_params(params)
         post = self.new do |post|
-            post.title = params[:title]
+            post.title = params[:title].titlecase
+            post.slug = params[:title].downcase.split(' ').join('-')
             post.description = params[:description]
             post.content = params[:content]
             post.cover_image = params[:cover_image]
