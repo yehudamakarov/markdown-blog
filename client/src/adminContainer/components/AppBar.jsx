@@ -49,10 +49,10 @@ class SimpleTabs extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="sticky">
           <Grid container justify='center'>
             <Grid item sm={9}>
-              <Toolbar>
+              <Toolbar variant='dense'>
                   <Tabs className={classes.flex} value={value} onChange={this.handleChange}>
                     <Tab label="New" />
                     <Tab label="Edit" />
