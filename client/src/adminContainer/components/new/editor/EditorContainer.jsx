@@ -20,8 +20,10 @@ import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
 import FormatListNumbered from '@material-ui/icons/FormatListNumbered';
 import CheckBox from '@material-ui/icons/CheckBox';
 import removeCoverImageWithUrlAction from '../../../../store/actions/removeCoverImageWithUrlAction';
+import submitPostAction from '../../../../store/actions/submitPostAction';
 import CoverImageUploader from './CoverImageUploader'
 import ImageUploader from "./ImageUploader";
+import SubmitPostButton from './SubmitPostButton';
 
 
 const resizeIcons = { fontSize: '2.1em' }
@@ -54,6 +56,11 @@ class MarkdownEditor extends React.Component {
             coverImage: '',
         };
         this.converter = new Showdown.Converter({tables: true, simplifiedAutoLink: true});
+    }
+
+    onPostSubmit = () => {
+        const { submitPostAction } = this.props;
+        submitPostAction(this.state);
     }
 
     onUrlDelete = () => {
@@ -183,6 +190,7 @@ class MarkdownEditor extends React.Component {
                                 label='Cover Image URL'
                                 value={coverImage}
                             />
+                            <SubmitPostButton onPostSubmit={this.onPostSubmit} />
                         </form>
                     </Grid>
                     <Grid item sm={5}>
@@ -218,4 +226,4 @@ const mapStateToProps = (state) => ({
         coverImagesWithUrl: state.coverImagesWithUrl
     })
 
-export default connect(mapStateToProps, { removeCoverImageWithUrlAction })(MarkdownEditor);
+export default connect(mapStateToProps, { removeCoverImageWithUrlAction, submitPostAction })(MarkdownEditor);
