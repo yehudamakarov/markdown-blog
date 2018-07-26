@@ -29,7 +29,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # gem 'rack-cors'
 
 # Serializer
-# gem 'active_model_serializers'
+gem 'active_model_serializers'
 
 # Run Client
 gem 'foreman'

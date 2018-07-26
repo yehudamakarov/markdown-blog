@@ -4,15 +4,14 @@ class Post < ApplicationRecord
     validates :title, presence: true, uniqueness: { case_sensitive: false }
     validates :description, presence: true
     
-    def self.create_from_params(params)
-        post = self.create do |post|
+    def self.new_from_params(params)
+        post = self.new do |post|
             post.title = params[:title]
             post.description = params[:description]
             post.content = params[:content]
             post.cover_image = params[:cover_image]
             post.tags = params[:tags]
         end
-        post
     end
 
     def tags=(tags)

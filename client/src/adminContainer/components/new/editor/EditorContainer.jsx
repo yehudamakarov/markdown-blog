@@ -69,7 +69,12 @@ class MarkdownEditor extends React.Component {
                 cover_image,
                 content,
             }
-        });
+        }).then((resp) => {
+            console.log('resp :', resp);
+        }).catch((error) => {
+            console.log('error :', error);
+            console.log('error.response :', error.response);              
+        })
     }
 
     onUrlDelete = () => {

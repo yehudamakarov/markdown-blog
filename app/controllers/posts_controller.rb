@@ -1,9 +1,10 @@
 class PostsController < ApplicationController
     def create
-        if @post = Post.create_from_params(post_params)
+        @post = Post.new_from_params(post_params)
+        if @post.save
             render json: @post, status: 201
         else
-            render json: @post, status: 422
+            render json: @post.errors, status: :unprocessable_entity
         end  
     end
 
