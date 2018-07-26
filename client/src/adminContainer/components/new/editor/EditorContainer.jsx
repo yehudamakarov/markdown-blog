@@ -117,15 +117,18 @@ class MarkdownEditor extends React.Component {
     onUrlDelete = (url) => {
         // take url out of state, make paper disappear
         // remove   picture
+        this.setState({
+            ...this.state,
+            coverImage: '',
+        }, () => {
+            this.props.removeCoverImageWithUrlAction();
+        })
     }
 
     onUrlPrepare = (url) => {
-        console.log('Hey');
-        
-        // remove preview image, put string of url in state
         this.setState({
             ...this.state,
-            coverImage: url.url
+            coverImage: url.url,
         })
     }
 
