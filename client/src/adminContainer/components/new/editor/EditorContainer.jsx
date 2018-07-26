@@ -133,6 +133,13 @@ class MarkdownEditor extends React.Component {
     }
 
     render() {
+        const {
+            mdeState,
+            title,
+            description,
+            tags,
+            coverImage,
+        } = this.state;
         const style = this.state.coverImage
             ?   {
                     borderStyle: 'solid', borderRadius: '4px', borderColor: '#689f38'
