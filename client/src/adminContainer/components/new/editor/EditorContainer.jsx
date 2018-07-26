@@ -6,7 +6,7 @@ import './customEditorStyle.css'
 import { connect } from "react-redux";
 import ImageUploader from "./ImageUploader";
 import CoverImageUploader from './CoverImageUploader'
-import removeImagesWithUrlAction from '../../../../store/actions/removeImagesWithUrlAction';
+import removeCoverImageWithUrlAction from '../../../../store/actions/removeCoverImageWithUrlAction';
 import ChipInput from 'material-ui-chip-input'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -22,6 +22,7 @@ import InsertPhoto from '@material-ui/icons/InsertPhoto';
 import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
 import FormatListNumbered from '@material-ui/icons/FormatListNumbered';
 import CheckBox from '@material-ui/icons/CheckBox';
+
 
 const resizeIcons = { fontSize: '2.1em' }
 
@@ -49,8 +50,8 @@ class MarkdownEditor extends React.Component {
             },
             title: '',
             description: '',
-            tags: []
-            
+            tags: [],
+            coverImage: '',
         };
         this.converter = new Showdown.Converter({tables: true, simplifiedAutoLink: true});
     }
@@ -113,9 +114,31 @@ class MarkdownEditor extends React.Component {
         })
     }
 
+    onUrlDelete = (url) => {
+        // take url out of state, make paper disappear
+        // remove   picture
+    }
+
+    onUrlPrepare = (url) => {
+        console.log('Hey');
+        
+        // remove preview image, put string of url in state
+        this.setState({
+            ...this.state,
+            coverImage: url.url
+        })
+    }
+
     render() {
+        const style = this.state.coverImage
+            ?   {
+                    borderStyle: 'solid', borderRadius: '4px', borderColor: '#689f38'
+            }
+            :   {
+
+            }
         return (
-            <Fragment>
+            <div style={{height: '100vh'}}>
                 <Grid container direction='row' spacing={16}>
                     <Grid item sm={7}>
                         <form>
@@ -143,7 +166,7 @@ class MarkdownEditor extends React.Component {
                         </form>
                     </Grid>
                     <Grid item sm={5}>
-                        <CoverImageUploader />
+                        <CoverImageUploader style={style} onUrlPrepare={this.onUrlPrepare} onUrlDelete={this.onUrlDelete} />
                     </Grid>
                 </Grid>
                 <Grid container direction='column' spacing={16} >
@@ -165,15 +188,16 @@ class MarkdownEditor extends React.Component {
                         <ImageUploader />
                     </Grid>
                 </Grid>
-            </Fragment>
+            </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        imagesWithUrl: state.imagesWithUrl
+        imagesWithUrl: state.imagesWithUrl,
+        coverImagesWithUrl: state.coverImagesWithUrl
     }
 }
 
-export default connect(mapStateToProps, { removeImagesWithUrlAction })(MarkdownEditor);
+export default connect(mapStateToProps, { removeCoverImageWithUrlAction })(MarkdownEditor);

@@ -5,6 +5,8 @@ const coverImagesWithUrlReducer = (state = [], action) => {
                 ...state,
                 action.payload
             ];
+    case 'REMOVE_COVER_IMAGE_WITH_URL':
+        return [];
     default:
         return state;
     }

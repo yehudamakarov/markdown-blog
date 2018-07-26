@@ -11,6 +11,8 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import addCoverPreviewAndBase64ImageAction from '../../../../store/actions/addCoverPreviewAndBase64ImageAction';
 import removeCoverImageFromPreviewAndBase64Action from '../../../../store/actions/removeCoverImageFromPreviewAndBase64Action';
+import UploadedImageUrlPreview from './UploadedImageUrlPreview';
+import removeCoverImageWithUrlAction from '../../../../store/actions/removeCoverImageWithUrlAction';
 
 class CoverImageUploader extends Component {
   // TO-DO
@@ -79,8 +81,18 @@ class CoverImageUploader extends Component {
   };
 
   render() {
+    const { style, onUrlPrepare, onUrlDelete } = this.props;
+    const url = this.props.coverImagesWithUrl[0]
+      ? Object.entries(this.props.coverImagesWithUrl[0]).map(([filename, url]) => {
+      return {
+        filename,
+        url,
+      }
+    })[0]
+    : null;
+
     return (
-      <div>
+      <div style={style} >
         <Grid container justify='center' spacing={16}>
           <Grid item sm={6}>
             <Dropzone style={this.dropzoneStyle} activeStyle={this.dropzoneStyleActive} onDrop={this.onDrop}>
@@ -116,25 +128,31 @@ class CoverImageUploader extends Component {
             overflow: 'hidden',
           }
         }>
-          <GridList style={{flexWrap: 'nowrap', transform: 'translateZ(0)',}} cols={1}>
-            {this.props.coverImagesWithPreviewAndBase64.map((imageObject, index) => 
-              <GridListTile key={index} rows={1.5}>
-                <img style={{maxWidth: '100%', height: 'auto'}} src={imageObject.preview} />
-                <GridListTileBar
-                  title={Object.keys(imageObject).find((imageObjectKey) => {
-                    return imageObjectKey !== 'preview'
-                  })}
-                  style={{
-                    background: '#4dabf5',
-                  }}
-                  actionIcon={
-                    <CoverImagePopover onClick={() => this.handlePictureRemove(index)} src={imageObject.preview} />
-                  }
-                />
-              </GridListTile>
-              )
-            }
-          </GridList>
+          { this.props.coverImagesWithUrl.length === 1
+          ? <UploadedImageUrlPreview
+              onUrlPrepare={onUrlPrepare}
+              onUrlDelete={onUrlDelete}
+              url={url} 
+            />
+          : <GridList style={{flexWrap: 'nowrap', transform: 'translateZ(0)',}} cols={2}>
+              {this.props.coverImagesWithPreviewAndBase64.map((imageObject, index) => 
+                <GridListTile key={index} rows={1.5}>
+                  <img src={imageObject.preview} />
+                  <GridListTileBar
+                    title={Object.keys(imageObject).find((imageObjectKey) => {
+                      return imageObjectKey !== 'preview'
+                    })}
+                    style={{
+                      background: '#4dabf5',
+                    }}
+                    actionIcon={
+                      <CoverImagePopover onClick={() => this.handlePictureRemove(index)} src={imageObject.preview} />
+                    }
+                  />
+                </GridListTile>
+                )
+              }
+          </GridList>}
         </div>
       </div>
     )
@@ -148,4 +166,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { coverImageUploadAction, addCoverPreviewAndBase64ImageAction, removeCoverImageFromPreviewAndBase64Action })(CoverImageUploader)
+export default connect(mapStateToProps, { coverImageUploadAction, addCoverPreviewAndBase64ImageAction, removeCoverImageFromPreviewAndBase64Action, removeCoverImageWithUrlAction })(CoverImageUploader)

@@ -14,9 +14,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 function TabContainer(props) {
   return (
-    <Typography component="div" style={{ height: '100vh', padding: 24 }}>
-      {props.children}
-    </Typography>
+      <Typography component="div" style={{ height: '100%', padding: 24 }}>
+          {props.children}
+      </Typography>
   );
 }
 
@@ -51,7 +51,7 @@ class SimpleTabs extends React.Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Grid container justify='center'>
-            <Grid item sm={10}>
+            <Grid item sm={9}>
               <Toolbar>
                   <Tabs className={classes.flex} value={value} onChange={this.handleChange}>
                     <Tab label="New" />
@@ -63,7 +63,7 @@ class SimpleTabs extends React.Component {
           </Grid>
         </AppBar>
         <Grid container justify='center'>
-          <Grid item sm={10}>
+          <Grid item sm={9}>
             {value === 0 && 
                 <TabContainer>
                     <Dashboard />
