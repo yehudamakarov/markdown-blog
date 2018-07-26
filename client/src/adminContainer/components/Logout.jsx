@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutAction } from "../../store/actions/loginAction";
 
-const Logout = withRouter(({ history, isLoggedIn, logoutAction }) => (
+const Logout = withRouter(({ history, isLoggedIn }) => (
     isLoggedIn === true
       ? <Button color="inherit" onClick={() => {
           logoutAction().then(() => {
@@ -14,10 +14,8 @@ const Logout = withRouter(({ history, isLoggedIn, logoutAction }) => (
       : null
 ))
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = (state) => ({
     isLoggedIn: state.auth.isLoggedIn
-  }
-}
+  })
 
 export default connect(mapStateToProps, { logoutAction })(Logout)

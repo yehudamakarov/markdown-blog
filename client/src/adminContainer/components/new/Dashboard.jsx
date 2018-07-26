@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import MarkdownEditor from './editor/EditorContainer';
 
 
-export default class Dashboard extends Component {
-  render() {
-    return (
-      <MarkdownEditor />
-    )
-  }
-}
+const Dashboard = () => <MarkdownEditor />
+
+export default Dashboard;
+    
