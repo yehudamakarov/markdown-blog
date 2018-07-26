@@ -3,4 +3,6 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
   get '/sessiontest', to: 'sessions#sessiontest'
+
+  resources :posts, only: [:create, :show, :index, :destroy]
 end

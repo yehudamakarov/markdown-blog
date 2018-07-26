@@ -53,14 +53,23 @@ class MarkdownEditor extends React.Component {
             title: '',
             description: '',
             tags: [],
-            coverImage: '',
+            cover_image: '',
         };
         this.converter = new Showdown.Converter({tables: true, simplifiedAutoLink: true});
     }
 
     onPostSubmit = () => {
         const { submitPostAction } = this.props;
-        submitPostAction(this.state);
+        const { title, description, tags, cover_image, mdeState: { markdown: content } } = this.state;
+        submitPostAction({
+            post: {
+                title,
+                description,
+                tags,
+                cover_image,
+                content,
+            }
+        });
     }
 
     onUrlDelete = () => {
@@ -68,7 +77,7 @@ class MarkdownEditor extends React.Component {
         // remove   picture
         this.setState((prevState) => ({
               ...prevState,
-              coverImage: '',
+              cover_image: '',
           }), () => {
             const { removeCoverImageWithUrlAction } = this.props;
             removeCoverImageWithUrlAction();
@@ -78,7 +87,7 @@ class MarkdownEditor extends React.Component {
     onUrlPrepare = url => {
         this.setState((prevState) => ({
             ...prevState,
-            coverImage: url.url,
+            cover_image: url.url,
         }))
     }
 
@@ -148,9 +157,9 @@ class MarkdownEditor extends React.Component {
             title,
             description,
             tags,
-            coverImage,
+            cover_image,
         } = this.state;
-        const style = this.state.coverImage === previewUrl
+        const style = this.state.cover_image === previewUrl
             ?   {
                     borderStyle: 'solid', borderRadius: '4px', borderColor: '#689f38'
                 }
@@ -185,10 +194,10 @@ class MarkdownEditor extends React.Component {
                             />
                             <TextField
                                 onChange={this.handleFormChange}
-                                name='coverImage'
+                                name='cover_image'
                                 style={{marginRight: '3vh', marginTop: '3vh', width: '90%',  marginBottom: '3vh' }}
                                 label='Cover Image URL'
-                                value={coverImage}
+                                value={cover_image}
                             />
                             <SubmitPostButton onPostSubmit={this.onPostSubmit} />
                         </form>
