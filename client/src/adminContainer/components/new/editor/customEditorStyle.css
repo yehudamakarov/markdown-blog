@@ -1,8 +1,8 @@
 .mde-header {
-    background: #4dabf5;
+    background: #2196f3;
 }
 .react-mde {
-    
+    height: 49vh;
 }
 .mde-preview .mde-preview-content img {
     max-width: 100%;

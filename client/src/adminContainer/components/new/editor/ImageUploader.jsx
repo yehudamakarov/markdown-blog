@@ -106,9 +106,9 @@ class ImageUploader extends Component {
             overflow: 'hidden',
           }
         }>
-          <GridList style={{flexWrap: 'nowrap', transform: 'translateZ(0)',}} cols={2.2}>
+          <GridList style={{flexWrap: 'nowrap', transform: 'translateZ(0)',}} cols={2.5}>
             {this.props.imagesWithPreviewAndBase64.map((imageObject, index) => 
-              <GridListTile key={index} rows={1.7}>
+              <GridListTile key={index} rows={2}>
                 <img src={imageObject.preview} />
                 <GridListTileBar
                   title={Object.keys(imageObject).find((imageObjectKey) => {

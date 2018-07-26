@@ -7,32 +7,23 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
-import red from '@material-ui/core/colors/red';
+import './App.css';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: blue,
-    secondary: red,
-  },
-});
+
 
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <div>
-          <Router>
-            <Fragment>
-              <Route exact path='/' component={PublicContainer} />
-              { /*<PrivateRoute exact path='/admin' component={AdminContainer} /> */}
-              <Route exact path='/admin' component={AdminContainer} />
-              <Route exact path='/login' component={Login} />
-            </Fragment>
-          </Router>
-        </div>
-      </MuiThemeProvider>
+      <div>
+        <Router>
+          <Fragment>
+            <Route exact path='/' component={PublicContainer} />
+            { /*<PrivateRoute exact path='/admin' component={AdminContainer} /> */}
+            <Route exact path='/admin' component={AdminContainer} />
+            <Route exact path='/login' component={Login} />
+          </Fragment>
+        </Router>
+      </div>
     );
   }
 }

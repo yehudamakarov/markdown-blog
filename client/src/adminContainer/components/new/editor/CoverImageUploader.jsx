@@ -1,17 +1,16 @@
 import React, { Component, Fragment } from 'react'
 import Dropzone from 'react-dropzone'
 import { connect } from 'react-redux';
-import imageUploadAction from '../../../../store/actions/imageUploadAction';
+import coverImageUploadAction from '../../../../store/actions/coverImageUploadAction';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import ImagePopover from './ImagePopover';
+import CoverImagePopover from './CoverImagePopover';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import addPreviewAndBase64ImageAction from '../../../../store/actions/addPreviewAndBase64ImageAction';
-import removeImageFromPreviewAndBase64Action from '../../../../store/actions/removeImageFromPreviewAndBase64Action';
+import addCoverPreviewAndBase64ImageAction from '../../../../store/actions/addCoverPreviewAndBase64ImageAction';
+import removeCoverImageFromPreviewAndBase64Action from '../../../../store/actions/removeCoverImageFromPreviewAndBase64Action';
 
 class CoverImageUploader extends Component {
   // TO-DO
@@ -33,7 +32,7 @@ class CoverImageUploader extends Component {
           preview: fileObject.preview,
         };
         // Send that object to the store.
-        this.props.addPreviewAndBase64ImageAction(imageObjectWithPreviewAndBase64);
+        this.props.addCoverPreviewAndBase64ImageAction(imageObjectWithPreviewAndBase64);
       }
       // Do said above for the file on this iteration of the images.
       reader.readAsDataURL(fileObject);
@@ -44,12 +43,12 @@ class CoverImageUploader extends Component {
   // Preview Url } to imgur, remove them from the store and be left 
   // with redux store with { Filename: Url }
   handleUploadClick = (event) => {
-    this.props.imageUploadAction(this.props.imagesWithPreviewAndBase64);
+    this.props.coverImageUploadAction(this.props.coverImagesWithPreviewAndBase64);
   }
 
   // Remove an image from the redux store and preview pane
   handlePictureRemove = (index) => {
-    this.props.removeImageFromPreviewAndBase64Action(index);
+    this.props.removeCoverImageFromPreviewAndBase64Action(index);
   }
 
   dropzoneStyle = {
@@ -81,23 +80,34 @@ class CoverImageUploader extends Component {
 
   render() {
     return (
-      <Paper elevation={8} style={{padding: '1%', paddingBottom: '2%'}}>
+      <div>
         <Grid container justify='center' spacing={16}>
           <Grid item sm={6}>
             <Dropzone style={this.dropzoneStyle} activeStyle={this.dropzoneStyleActive} onDrop={this.onDrop}>
               <Typography component='div' variant='button' color='inherit'>
-                Drop Images Here
+                Drop Cover Image Here
               </Typography>
             </Dropzone>
           </Grid>
           <Grid item sm={6}>
-              <Button fullWidth={true} variant='contained' color='primary' onClick={this.handleUploadClick}>Upload</Button>
+            <Button
+              disabled={
+                this.props.coverImagesWithPreviewAndBase64.length > 1
+                  ? true
+                  : false
+                }
+              fullWidth={true}
+              variant='contained'
+              color='primary'
+              onClick={this.handleUploadClick}
+            >
+              {this.props.coverImagesWithPreviewAndBase64.length > 1
+                ? 'Only Upload 1 Cover Image'
+                : 'Upload'}
+            </Button>
           </Grid>
         </Grid>
         <hr/>
-        <Fragment>
-          <Typography variant='title'>Images To Upload:</Typography>
-        </Fragment>
         <div style={
           {
             display: 'flex',
@@ -106,10 +116,10 @@ class CoverImageUploader extends Component {
             overflow: 'hidden',
           }
         }>
-          <GridList style={{flexWrap: 'nowrap', transform: 'translateZ(0)',}} cols={2.2}>
-            {this.props.imagesWithPreviewAndBase64.map((imageObject, index) => 
-              <GridListTile key={index} rows={1.7}>
-                <img src={imageObject.preview} />
+          <GridList style={{flexWrap: 'nowrap', transform: 'translateZ(0)',}} cols={1}>
+            {this.props.coverImagesWithPreviewAndBase64.map((imageObject, index) => 
+              <GridListTile key={index} rows={1.5}>
+                <img style={{maxWidth: '100%', height: 'auto'}} src={imageObject.preview} />
                 <GridListTileBar
                   title={Object.keys(imageObject).find((imageObjectKey) => {
                     return imageObjectKey !== 'preview'
@@ -118,7 +128,7 @@ class CoverImageUploader extends Component {
                     background: '#4dabf5',
                   }}
                   actionIcon={
-                    <ImagePopover onClick={() => this.handlePictureRemove(index)} src={imageObject.preview} />
+                    <CoverImagePopover onClick={() => this.handlePictureRemove(index)} src={imageObject.preview} />
                   }
                 />
               </GridListTile>
@@ -126,16 +136,16 @@ class CoverImageUploader extends Component {
             }
           </GridList>
         </div>
-      </Paper>
+      </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    imagesWithUrl: state.imagesWithUrl,
-    imagesWithPreviewAndBase64: state.imagesWithPreviewAndBase64,
+    coverImagesWithUrl: state.coverImagesWithUrl,
+    coverImagesWithPreviewAndBase64: state.coverImagesWithPreviewAndBase64,
   }
 }
 
-export default connect(mapStateToProps, { imageUploadAction, addPreviewAndBase64ImageAction, removeImageFromPreviewAndBase64Action })(CoverImageUploader)
+export default connect(mapStateToProps, { coverImageUploadAction, addCoverPreviewAndBase64ImageAction, removeCoverImageFromPreviewAndBase64Action })(CoverImageUploader)

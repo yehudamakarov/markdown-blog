@@ -14,7 +14,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 function TabContainer(props) {
   return (
-    <Typography component="div" style={{ padding: 24 }}>
+    <Typography component="div" style={{ height: '100vh', padding: 24 }}>
       {props.children}
     </Typography>
   );

@@ -117,7 +117,7 @@ class MarkdownEditor extends React.Component {
         return (
             <Fragment>
                 <Grid container direction='row' spacing={16}>
-                    <Grid item sm={6}>
+                    <Grid item sm={7}>
                         <form>
                             <TextField
                                 onChange={this.handleFormChange}
@@ -137,13 +137,12 @@ class MarkdownEditor extends React.Component {
                                 style={{marginRight: '3vh',marginTop: '3vh',  marginBottom: '3vh', width: '90%' }}
                                 value={this.state.tags}
                                 label='Tags'
-                                shrink={true}
                                 onAdd={(tag) => this.handleAddTag(tag)}
                                 onDelete={(tag, index) => this.handleDeleteTag(tag, index)}
                             />
                         </form>
                     </Grid>
-                    <Grid item sm={6}>
+                    <Grid item sm={5}>
                         <CoverImageUploader />
                     </Grid>
                 </Grid>
