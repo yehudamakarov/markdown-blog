@@ -97,7 +97,7 @@ class CoverImageUploader extends Component {
           <Grid item sm={6}>
             <Dropzone style={this.dropzoneStyle} activeStyle={this.dropzoneStyleActive} onDrop={this.onDrop}>
               <Typography component='div' variant='button' color='inherit'>
-                Drop Cover Image Here
+                Drop Cover Image
               </Typography>
             </Dropzone>
           </Grid>
