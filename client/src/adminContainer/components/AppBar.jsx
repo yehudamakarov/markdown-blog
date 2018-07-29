@@ -63,20 +63,20 @@ class SimpleTabs extends React.Component {
             </Grid>
           </Grid>
         </AppBar>
-        
+        <Grid container justify='center'>
             {value === 0 && 
-                
+                <Grid item sm={9}>
                     <TabContainer>
-                        <div style={{height: '100%', padding: 24}}>
+                        <div style={{height: '100vh', padding: 24}}>
                             <Dashboard />
                         </div>
                     </TabContainer>
-                
+                </Grid>
             }
             {value === 1 && 
                 <PublicContainer />
             }
-        
+        </Grid>
       </div>
     );
   }
