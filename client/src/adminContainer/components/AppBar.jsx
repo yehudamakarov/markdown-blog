@@ -14,7 +14,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 function TabContainer(props) {
   return (
-      <Typography component="div" style={{ height: '100%', padding: 24 }}>
+      <Typography component="div">
           {props.children}
       </Typography>
   );
@@ -28,6 +28,7 @@ const styles = theme => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+    height: '100%'
   },
   flex: {
     flexGrow: 1,
@@ -62,20 +63,20 @@ class SimpleTabs extends React.Component {
             </Grid>
           </Grid>
         </AppBar>
-        <Grid container justify='center'>
-          <Grid item sm={9}>
+        
             {value === 0 && 
-                <TabContainer>
-                    <Dashboard />
-                </TabContainer>
+                
+                    <TabContainer>
+                        <div style={{height: '100%', padding: 24}}>
+                            <Dashboard />
+                        </div>
+                    </TabContainer>
+                
             }
             {value === 1 && 
-                <TabContainer>
-                    <PublicContainer />
-                </TabContainer>
+                <PublicContainer />
             }
-          </Grid>
-        </Grid>
+        
       </div>
     );
   }

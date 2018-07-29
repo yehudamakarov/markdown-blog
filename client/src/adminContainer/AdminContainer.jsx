@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import AppBar from './components/AppBar';
 
 const AdminContainer = () => 
-<div>
-<AppBar />
+<div style={{height: '100%'}}>
+    <AppBar />
 </div>
     
   

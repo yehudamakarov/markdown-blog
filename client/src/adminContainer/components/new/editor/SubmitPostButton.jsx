@@ -22,7 +22,7 @@ function SubmitPostButton(props) {
   const { onPostSubmit, classes } = props;
   return (
     <div>
-      <Button onClick={() => onPostSubmit()} variant="contained" color="secondary" className={classes.button}>
+      <Button fullWidth onClick={() => onPostSubmit()} variant="contained" color="secondary" className={classes.button}>
         Submit
         <CloudUploadIcon className={classes.rightIcon} />
       </Button>

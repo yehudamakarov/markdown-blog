@@ -69,9 +69,17 @@ class MarkdownEditor extends React.Component {
                 cover_image,
                 content,
             }
+// make sure that when setting the state properties here, that the state object
+// is clean when it makes irt to the rails controller.
         }).then((resp) => {
+            // On success, can set the state to have property that evaluates to
+            // true. And a property with the new post's slug. and render a
+            // redirect component down below. On the state update, component
+            // will rerender the redirect to the new route.
             console.log('resp :', resp);
         }).catch((error) => {
+            // On error, everything should rerender but with appropriate error
+            // message. which means set a state with error properties. 
             console.log('error :', error);
             console.log('error.response :', error.response);              
         })
@@ -170,7 +178,7 @@ class MarkdownEditor extends React.Component {
                 }
             :   {}
         return (
-            <div style={{height: '100vh'}}>
+            <div style={{ height: '100%'}}>
                 <Grid container direction='row' spacing={16}>
                     <Grid item sm={7}>
                         <form>
@@ -204,13 +212,13 @@ class MarkdownEditor extends React.Component {
                                 label='Cover Image URL'
                                 value={cover_image}
                             />
-                            <SubmitPostButton onPostSubmit={this.onPostSubmit} />
                         </form>
                     </Grid>
                     <Grid item sm={5}>
                         <CoverImageUploader style={style} onUrlPrepare={this.onUrlPrepare} onUrlDelete={this.onUrlDelete} />
                     </Grid>
                 </Grid>
+                <SubmitPostButton onPostSubmit={this.onPostSubmit} />
                 <Grid container direction='column' spacing={16} >
                     <Grid item>
                         <ReactMde
