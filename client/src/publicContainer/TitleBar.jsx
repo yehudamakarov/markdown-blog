@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -14,6 +14,10 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Display from './Display';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { connect } from 'react-redux';
+import fetchTags from '../store/actions/fetchTags';
 
 // import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 
@@ -98,7 +102,7 @@ const styles = theme => ({
   },
 });
 
-class PersistentDrawer extends React.Component {
+class TitleBar extends React.Component {
   state = {
     open: false,
     anchor: 'left',
@@ -118,8 +122,12 @@ class PersistentDrawer extends React.Component {
     });
   };
 
+  componentDidMount() {
+    this.props.fetchTags();
+  }
+
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, tags } = this.props;
     const { anchor, open } = this.state;
 
     const drawer = (
@@ -137,8 +145,14 @@ class PersistentDrawer extends React.Component {
           </IconButton>
         </div>
         <Divider />
-        <List>{/*mailFolderListItems*/}</List>
-        <Divider />
+        <List>
+            {tags.map(tag =>
+                <ListItem button component={Link} to={`/tags/${tag.slug}`}>
+                    <ListItemText primary={tag.title} />
+                </ListItem> 
+            )}
+        </List>
+        {/*<Divider />*/}
         <List>{/*otherMailFolderListItems*/}</List>
       </Drawer>
     );
@@ -182,9 +196,11 @@ class PersistentDrawer extends React.Component {
   }
 }
 
-PersistentDrawer.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-};
+const mapStateToProps = (state) => {
+  return {
+      tags: state.tags,
+    }
+}
 
-export default withStyles(styles, { withTheme: true })(PersistentDrawer);
+
+export default withStyles(styles, { withTheme: true })(connect(mapStateToProps, { fetchTags })(TitleBar));

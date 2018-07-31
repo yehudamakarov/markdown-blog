@@ -1,4 +1,3 @@
 class TagSerializer < ActiveModel::Serializer
-    attributes :name
-    has_many :posts
+    attributes :id, :name, :slug, :title
 end

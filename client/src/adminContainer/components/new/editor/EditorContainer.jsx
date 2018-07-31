@@ -172,6 +172,7 @@ class MarkdownEditor extends React.Component {
             tags,
             cover_image,
         } = this.state;
+        const { tagNames } = this.props;
         const style = this.state.cover_image === previewUrl
             ?   {
                     borderStyle: 'solid', borderRadius: '4px', borderColor: '#689f38'
@@ -204,6 +205,7 @@ class MarkdownEditor extends React.Component {
                                 label='Tags'
                                 onAdd={(tag) => this.handleAddTag(tag)}
                                 onDelete={(tag, index) => this.handleDeleteTag(tag, index)}
+                                dataSource={tagNames}
                             />
                             <TextField
                                 onChange={this.handleFormChange}
@@ -245,7 +247,8 @@ class MarkdownEditor extends React.Component {
 
 const mapStateToProps = (state) => ({
         imagesWithUrl: state.imagesWithUrl,
-        coverImagesWithUrl: state.coverImagesWithUrl
+        coverImagesWithUrl: state.coverImagesWithUrl,
+        tagNames: state.tags.map(tagObject => tagObject.title)
     })
 
 export default connect(mapStateToProps, { removeCoverImageWithUrlAction, submitPostAction })(MarkdownEditor);

@@ -20,7 +20,7 @@ function UploadedImageUrlPreview(props) {
         
         <Paper className={classes.root} elevation={8}>
             <FloatingActionButtons url={url} onUrlPrepare={onUrlPrepare} onUrlDelete={onUrlDelete}/>
-            <Typography variant="headline" component="h3">
+            <Typography variant="headline" component="h5">
                 {url.url}
             </Typography>
             <hr/>

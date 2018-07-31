@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TitleBar from './TitleBar';
 
@@ -15,14 +14,13 @@ const styles = theme => ({
 class PublicContainer extends Component {
 
     render() {
-        const {classes} = this.props;
+        const { classes, match } = this.props;
         return (
             <div className={classes.root}>
                 <Typography
                     component="div"
-                    
                 >
-                    <TitleBar />
+                    <TitleBar match={match} />
                 </Typography>
             </div>
             

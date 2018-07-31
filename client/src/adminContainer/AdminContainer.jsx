@@ -2,9 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux';
 import AppBar from './components/AppBar';
 
-const AdminContainer = () => 
+const AdminContainer = ({ match }) => 
 <div>
-    <AppBar />
+    <AppBar match={match} />
 </div>
     
   

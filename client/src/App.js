@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { 
   BrowserRouter as Router,
   Route,
+  Switch,
 } from 'react-router-dom'
 import PublicContainer from './publicContainer/PublicContainer'
 import AdminContainer from './adminContainer/AdminContainer'
@@ -16,12 +17,12 @@ class App extends Component {
     return (
       <div>
         <Router>
-          <Fragment>
-            <Route exact path='/' component={PublicContainer} />
+          <Switch>
             { /* <PrivateRoute exact path='/admin' component={AdminContainer} /> */}
             <Route exact path='/admin' component={AdminContainer} />
             <Route exact path='/login' component={Login} />
-          </Fragment>
+            <Route path='/' component={PublicContainer} />
+          </Switch>
         </Router>
       </div>
     );

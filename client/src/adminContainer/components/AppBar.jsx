@@ -45,7 +45,7 @@ class SimpleTabs extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, match } = this.props;
     const { value } = this.state;
 
     return (
@@ -74,7 +74,7 @@ class SimpleTabs extends React.Component {
                 </Grid>
             }
             {value === 1 && 
-                <PublicContainer />
+                <PublicContainer match={match} />
             }
         </Grid>
       </div>

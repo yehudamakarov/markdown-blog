@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   get '/sessiontest', to: 'sessions#sessiontest'
 
   resources :posts, only: [:create, :show, :index, :destroy]
+  resources :tags, only: [:index]
+
 end

@@ -17,7 +17,10 @@ class Post < ApplicationRecord
 
     def tags=(tags)
         tags.each do |tag_string|
-            tag = Tag.find_or_create_by(name: tag_string)
+            tag = Tag.find_or_create_by(name: tag_string.downcase.strip) do |tag|
+                tag.title = tag.name.titlecase
+                tag.slug = tag.name.split(' ').join('-')
+            end
             self.tags << tag
         end
     end
