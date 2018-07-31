@@ -14,6 +14,13 @@ export default class Display extends Component {
                 <p>{routeProps.match.path}</p>
             </div>
         } />
+        <Route exact path={`${match.url}`} render={(routeProps) => 
+            <div>
+                <h1>Post Index</h1>
+                <p>{routeProps.match.url}</p>
+                <p>{routeProps.match.path}</p>
+            </div>
+        } />
       </div>
     )
   }

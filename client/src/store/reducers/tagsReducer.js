@@ -3,7 +3,6 @@ const tagsReducer = (state = [], action) => {
     case 'ADD_FETCHED_TAGS':
         
         return [
-            ...state,
             ...action.payload
         ]
 

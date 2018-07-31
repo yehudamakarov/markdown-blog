@@ -152,8 +152,12 @@ class TitleBar extends React.Component {
                 </ListItem> 
             )}
         </List>
-        {/*<Divider />*/}
-        <List>{/*otherMailFolderListItems*/}</List>
+        <Divider />
+        <List>
+            <ListItem button component={Link} to={`${match.url}`}>
+                <ListItemText primary='All Posts' />
+            </ListItem> 
+        </List>
       </Drawer>
     );
 
