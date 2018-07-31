@@ -5,6 +5,18 @@
         "prettier/react"
     ],
     "parser": "babel-eslint",
+    "rules": {
+        "prettier/prettier": [
+            "error",
+            {
+                "trailingComma": "es5",
+                "singleQuote": true,
+                "printWidth": 120,
+                "tabWidth": 4
+            }
+        ],
+        "react/prop-types": 0
+    },
     "plugins": [
         "prettier"
     ]
