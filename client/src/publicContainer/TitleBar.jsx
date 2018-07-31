@@ -127,7 +127,7 @@ class TitleBar extends React.Component {
   }
 
   render() {
-    const { classes, theme, tags } = this.props;
+    const { classes, theme, tags, match } = this.props;
     const { anchor, open } = this.state;
 
     const drawer = (
@@ -147,7 +147,7 @@ class TitleBar extends React.Component {
         <Divider />
         <List>
             {tags.map(tag =>
-                <ListItem button component={Link} to={`/tags/${tag.slug}`}>
+                <ListItem button component={Link} to={`${match.url === '/' ? '' : match.url}/tags/${tag.slug}`}>
                     <ListItemText primary={tag.title} />
                 </ListItem> 
             )}
@@ -188,7 +188,7 @@ class TitleBar extends React.Component {
             })}
           >
             <div className={classes.drawerHeader} />
-            <Display/>
+            <Display match={match} />
           </main>
         </div>
       </div>
