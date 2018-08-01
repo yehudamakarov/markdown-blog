@@ -19,7 +19,7 @@ import fetchTags from '../store/actions/fetchTags';
 
 // import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 
-const drawerWidth = 240;
+const drawerWidth = 314;
 
 const styles = theme => ({
     root: {
@@ -34,7 +34,7 @@ const styles = theme => ({
         width: '100%',
     },
     appBar: {
-        position: 'absolute',
+        position: window.location.toString().includes('admin') ? 'absolute' : 'fixed',
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,

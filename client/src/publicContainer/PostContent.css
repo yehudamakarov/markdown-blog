@@ -1,0 +1,18 @@
+.content {
+    max-width: 85%;
+    margin: auto;
+    padding: 2%;
+}
+code {
+    background-color: #e0e0e0;
+    border-radius: 2px;
+}
+img {
+    max-width: 100%;
+    margin: auto;
+}
+
+/* img {
+    margin-left: -10.8%;
+    max-width: 98vw;
+} */

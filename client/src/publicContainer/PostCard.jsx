@@ -37,7 +37,7 @@ function SimpleMediaCard(props) {
                     <Typography component="p">{description}</Typography>
                 </CardContent>
                 <CardActions>
-                    <PostView />
+                    <PostView description={description} title={title} content={content} />
                 </CardActions>
             </Card>
         </Grid>

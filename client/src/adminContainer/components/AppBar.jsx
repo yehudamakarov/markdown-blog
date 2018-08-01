@@ -8,9 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 import Toolbar from '@material-ui/core/Toolbar';
-import Dashboard from '../components/new/Dashboard';
+import Dashboard from './new/Dashboard';
 import PublicContainer from '../../publicContainer/PublicContainer';
-import Logout from '../components/Logout'
+import Logout from './Logout';
 
 function TabContainer(props) {
     return <Typography component="div">{props.children}</Typography>;
