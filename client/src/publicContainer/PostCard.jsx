@@ -29,62 +29,55 @@ const styles = theme => ({
     },
 });
 
-function PostCard({
-    match,
-    classes,
-    id,
-    tags,
-    title,
-    slug,
-    description,
-    content,
-    cover_image: coverImage,
-    created_at,
-}) {
-    return (
-        <Grid item xs={10} lg={6}>
-            <Card className={classes.card}>
-                <CardMedia image={coverImage}>
-                    <img className={classes.media} src={coverImage} alt="" />
-                </CardMedia>
-                <CardContent>
-                    <Grid container justify="space-between">
-                        <Grid item className={classes.chip}>
-                            <Typography gutterBottom variant="headline" component="h2">
-                                {title}
-                            </Typography>
-                            <Typography component="p">{description}</Typography>
-                        </Grid>
-                        <Grid item>
-                            {tags.map(tagObject => (
-                                <Chip
-                                    key={tagObject.slug}
-                                    label={tagObject.title}
-                                    className={classes.chip}
-                                    component={Link}
-                                    to={`${match.url.includes('/admin') ? '/admin' : ''}/tags/${tagObject.slug}`}
-                                    clickable
-                                />
-                            ))}
-                        </Grid>
+const PostCard = ({ match, classes, id, tags, title, slug, description, content, coverImage, created_at }) => (
+    <Grid item xs={8} lg={6}>
+        <Card className={classes.card}>
+            <CardMedia image={coverImage}>
+                <img className={classes.media} src={coverImage} alt="" />
+            </CardMedia>
+            <CardContent>
+                <Grid container justify="space-between">
+                    <Grid item className={classes.chip}>
+                        <Typography gutterBottom variant="headline" component="h2">
+                            {title}
+                        </Typography>
+                        <Typography component="p">{description}</Typography>
                     </Grid>
-                </CardContent>
-                <CardActions>
-                    <Grid container justify="space-between" className={classes.chip}>
-                        <Grid item>
-                            <PostView description={description} title={title} content={content} />
-                        </Grid>
-                        <Grid item>
-                            <PostEdit title={title} />
-                            <Button size="small" color="primary">
-                                Delete
-                            </Button>
-                        </Grid>
+                    <Grid item>
+                        {tags.map(tagObject => (
+                            <Chip
+                                key={tagObject.slug}
+                                label={tagObject.title}
+                                className={classes.chip}
+                                component={Link}
+                                to={`${match.url.includes('/admin') ? '/admin' : ''}/tags/${tagObject.slug}`}
+                                clickable
+                            />
+                        ))}
                     </Grid>
-                </CardActions>
-            </Card>
-        </Grid>
-    );
-}
+                </Grid>
+            </CardContent>
+            <CardActions>
+                <Grid container justify="space-between" className={classes.chip}>
+                    <Grid item>
+                        <PostView description={description} title={title} content={content} />
+                    </Grid>
+                    <Grid item>
+                        <PostEdit
+                            title={title}
+                            description={description}
+                            tags={tags}
+                            content={content}
+                            coverImage={coverImage}
+                        />
+                        <Button size="small" color="primary">
+                            Delete
+                        </Button>
+                    </Grid>
+                </Grid>
+            </CardActions>
+        </Card>
+    </Grid>
+);
 
 export default withStyles(styles)(PostCard);

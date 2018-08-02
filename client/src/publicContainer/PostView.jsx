@@ -21,7 +21,7 @@ const styles = {
         marginTop: '2%',
     },
     appBar: {
-        position: 'fixed',
+        position: 'static',
     },
     flex: {
         flex: 1,
@@ -67,7 +67,7 @@ class PostView extends React.Component {
                             </Typography>
                         </Toolbar>
                     </AppBar>
-                    <Paper className={classes.contentAppBarFix}>
+                    <Paper>
                         <Typography className={classes.title} variant="headline">
                             {description}
                         </Typography>

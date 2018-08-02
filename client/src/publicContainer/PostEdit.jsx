@@ -8,12 +8,14 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import isEditingAction from '../store/actions/isEditingAction';
 import isNotEditingAction from '../store/actions/isNotEditingAction';
+import MarkdownEditor from '../adminContainer/components/new/editor/EditorContainer';
 
-const styles = {
+const styles = theme => ({
     moveIcon: {
         paddingLeft: '8px',
     },
@@ -22,18 +24,21 @@ const styles = {
         marginTop: '2%',
     },
     appBar: {
-        position: 'fixed',
+        position: 'static',
     },
     flex: {
         flex: 1,
     },
-    contentAppBarFix: {
-        paddingTop: '64px',
-    },
     inlineButton: {
         display: 'inline',
     },
-};
+    root: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+        height: '100%',
+        paddingTop: '64px',
+    },
+});
 
 function Transition(props) {
     return <Slide direction="up" {...props} />;
@@ -57,7 +62,7 @@ class PostEdit extends React.Component {
     };
 
     render() {
-        const { classes, title } = this.props;
+        const { classes, title, description, tags, content, coverImage } = this.props;
         const { open } = this.state;
         return (
             <div className={classes.inlineButton}>
@@ -81,8 +86,22 @@ class PostEdit extends React.Component {
                             </Button>
                         </Toolbar>
                     </AppBar>
-                    <Paper className={classes.contentAppBarFix}>
-                        <Typography>Editor with filled state</Typography>
+                    <Paper style={{ paddingTop: '64px' }}>
+                        <Grid container justify="center">
+                            <Grid item sm={9}>
+                                <Typography component="div">
+                                    <div style={{ padding: 24 }}>
+                                        <MarkdownEditor
+                                            title={title}
+                                            description={description}
+                                            tags={tags}
+                                            content={content}
+                                            coverImage={coverImage}
+                                        />
+                                    </div>
+                                </Typography>
+                            </Grid>
+                        </Grid>
                     </Paper>
                 </Dialog>
             </div>

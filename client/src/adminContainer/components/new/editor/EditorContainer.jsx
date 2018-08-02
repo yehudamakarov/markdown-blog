@@ -52,19 +52,24 @@ class MarkdownEditor extends React.Component {
             title: '',
             description: '',
             tags: [],
-            cover_image: '',
+            coverImage: '',
         };
         this.converter = new Showdown.Converter({ tables: true, simplifiedAutoLink: true });
     }
 
     componentDidMount() {
-        const { fetchTags } = this.props;
+        const { fetchTags, isEditing } = this.props;
         fetchTags();
         // Make a store property `isEditing: Boolean`
         // map that state to these props.
         // this component will be passed the post from clicking its edit button
         // call setState with the values of the postObject passed in IF isEditing === true
         // anything closing the dialog should set isEditing back to false
+        if (isEditing) {
+            const { title, description, tags, content, coverImage } = this.props;
+            const tagNames = tags.map(tagObject => tagObject.title);
+            this.setState({ mdeState: { markdown: content }, title, description, tags: tagNames, coverImage });
+        }
     }
 
     onPostSubmit = () => {
@@ -73,7 +78,7 @@ class MarkdownEditor extends React.Component {
             title,
             description,
             tags,
-            cover_image,
+            coverImage,
             mdeState: { markdown: content },
         } = this.state;
         submitPostAction({
@@ -81,7 +86,7 @@ class MarkdownEditor extends React.Component {
                 title,
                 description,
                 tags,
-                cover_image,
+                cover_image: coverImage,
                 content,
             },
             // make sure that when setting the state properties here, that the state object
@@ -108,7 +113,7 @@ class MarkdownEditor extends React.Component {
         this.setState(
             prevState => ({
                 ...prevState,
-                cover_image: '',
+                coverImage: '',
             }),
             () => {
                 const { removeCoverImageWithUrlAction } = this.props;
@@ -120,7 +125,7 @@ class MarkdownEditor extends React.Component {
     onUrlPrepare = url => {
         this.setState(prevState => ({
             ...prevState,
-            cover_image: url.url,
+            coverImage: url.url,
         }));
     };
 
@@ -179,10 +184,10 @@ class MarkdownEditor extends React.Component {
         const previewUrl = this.props.coverImagesWithUrl[0]
             ? Object.entries(this.props.coverImagesWithUrl[0]).map(([filename, url]) => url)[0]
             : null;
-        const { mdeState, title, description, tags, cover_image } = this.state;
+        const { mdeState, title, description, tags, coverImage } = this.state;
         const { tagNames } = this.props;
         const style =
-            this.state.cover_image === previewUrl
+            this.state.coverImage === previewUrl
                 ? {
                       borderStyle: 'solid',
                       borderRadius: '4px',
@@ -220,10 +225,10 @@ class MarkdownEditor extends React.Component {
                             />
                             <TextField
                                 onChange={this.handleFormChange}
-                                name="cover_image"
+                                name="coverImage"
                                 style={{ marginRight: '3vh', marginTop: '3vh', width: '90%', marginBottom: '3vh' }}
                                 label="Cover Image URL"
-                                value={cover_image}
+                                value={coverImage}
                             />
                         </form>
                     </Grid>
@@ -266,6 +271,7 @@ const mapStateToProps = state => ({
     imagesWithUrl: state.imagesWithUrl,
     coverImagesWithUrl: state.coverImagesWithUrl,
     tagNames: state.tags.map(tagObject => tagObject.title),
+    isEditing: state.isEditing,
 });
 
 export default connect(

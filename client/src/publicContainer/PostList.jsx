@@ -24,7 +24,7 @@ class PostList extends Component {
                         slug={post.slug}
                         description={post.description}
                         content={post.content}
-                        cover_image={post.cover_image}
+                        coverImage={post.cover_image}
                         created_at={post.created_at}
                     />
                 ))}
