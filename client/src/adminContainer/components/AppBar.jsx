@@ -12,13 +12,9 @@ import Dashboard from './new/Dashboard';
 import PublicContainer from '../../publicContainer/PublicContainer';
 import Logout from './Logout';
 
-function TabContainer(props) {
-    return <Typography component="div">{props.children}</Typography>;
+function TabContainer({ children }) {
+    return <Typography component="div">{children}</Typography>;
 }
-
-TabContainer.propTypes = {
-    children: PropTypes.node.isRequired,
-};
 
 const styles = theme => ({
     root: {
@@ -63,7 +59,7 @@ class SimpleTabs extends React.Component {
                     {value === 0 && (
                         <Grid item sm={9}>
                             <TabContainer>
-                                <div style={{ height: '100vh', padding: 24 }}>
+                                <div style={{ padding: 24 }}>
                                     <Dashboard />
                                 </div>
                             </TabContainer>

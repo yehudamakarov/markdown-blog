@@ -13,9 +13,10 @@ class PostList extends Component {
     render() {
         const { match, posts } = this.props;
         return (
-            <Grid container direction="row" spacing={16}>
+            <Grid container justify="space-around" alignItems="center" direction="column" spacing={16}>
                 {posts.map(post => (
                     <PostCard
+                        tags={post.tags}
                         match={match}
                         key={post.slug}
                         id={post.id}

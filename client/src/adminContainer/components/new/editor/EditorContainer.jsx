@@ -60,6 +60,11 @@ class MarkdownEditor extends React.Component {
     componentDidMount() {
         const { fetchTags } = this.props;
         fetchTags();
+        // Make a store property `isEditing: Boolean`
+        // map that state to these props.
+        // this component will be passed the post from clicking its edit button
+        // call setState with the values of the postObject passed in IF isEditing === true
+        // anything closing the dialog should set isEditing back to false
     }
 
     onPostSubmit = () => {
@@ -80,7 +85,7 @@ class MarkdownEditor extends React.Component {
                 content,
             },
             // make sure that when setting the state properties here, that the state object
-            // is clean when it makes irt to the rails controller.
+            // is clean (only has property names matching with model attributes) when it makes it to the rails controller.
         })
             .then(resp => {
                 // On success, can set the state to have property that evaluates to

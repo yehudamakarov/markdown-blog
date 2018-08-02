@@ -1,8 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import MarkdownEditor from './editor/EditorContainer';
 
-
-const Dashboard = () => <MarkdownEditor />
+const Dashboard = () => <MarkdownEditor />;
 
 export default Dashboard;
-    

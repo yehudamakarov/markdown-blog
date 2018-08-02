@@ -6,6 +6,7 @@ import coverImagesWithPreviewAndBase64Reducer from './coverImagesWithPreviewAndB
 import coverImagesWithUrlReducer from './coverImagesWithUrlReducer';
 import tagsReducer from './tagsReducer';
 import postsReducer from './postsReducer';
+import isEditingReducer from './isEditingReducer';
 
 const rootReducer = combineReducers({
     auth: loginReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     coverImagesWithUrl: coverImagesWithUrlReducer,
     tags: tagsReducer,
     posts: postsReducer,
+    isEditing: isEditingReducer,
 });
 
 export default rootReducer;

@@ -9,8 +9,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import Divider from '@material-ui/core/Divider';
-import PostContent from './PostContent';
 
 const styles = {
     moveIcon: {
@@ -29,13 +27,16 @@ const styles = {
     contentAppBarFix: {
         paddingTop: '64px',
     },
+    inlineButton: {
+        display: 'inline',
+    },
 };
 
 function Transition(props) {
     return <Slide direction="up" {...props} />;
 }
 
-class PostView extends React.Component {
+class PostEdit extends React.Component {
     state = {
         open: false,
     };
@@ -49,12 +50,12 @@ class PostView extends React.Component {
     };
 
     render() {
-        const { classes, content, title, description } = this.props;
+        const { classes, title } = this.props;
         const { open } = this.state;
         return (
-            <div>
+            <div className={classes.inlineButton}>
                 <Button size="small" color="primary" onClick={this.handleClickOpen}>
-                    View
+                    Edit
                 </Button>
                 <Dialog fullScreen open={open} onClose={this.handleClose} TransitionComponent={Transition}>
                     <AppBar className={classes.appBar}>
@@ -63,16 +64,18 @@ class PostView extends React.Component {
                                 <CloseIcon />
                             </IconButton>
                             <Typography variant="title" color="inherit" className={classes.flex}>
-                                {title}
+                                Editing: {title}
                             </Typography>
+                            <Button color="secondary" onClick={this.handleClose}>
+                                Delete
+                            </Button>
+                            <Button color="inherit" onClick={this.handleClose}>
+                                Save
+                            </Button>
                         </Toolbar>
                     </AppBar>
                     <Paper className={classes.contentAppBarFix}>
-                        <Typography className={classes.title} variant="headline">
-                            {description}
-                        </Typography>
-                        <Divider />
-                        <PostContent content={content} />
+                        <Typography>Editor with filled state</Typography>
                     </Paper>
                 </Dialog>
             </div>
@@ -80,4 +83,4 @@ class PostView extends React.Component {
     }
 }
 
-export default withStyles(styles)(PostView);
+export default withStyles(styles)(PostEdit);
