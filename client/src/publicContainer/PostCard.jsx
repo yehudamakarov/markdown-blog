@@ -58,6 +58,7 @@ function PostCard({
                         <Grid item>
                             {tags.map(tagObject => (
                                 <Chip
+                                    key={tagObject.slug}
                                     label={tagObject.title}
                                     className={classes.chip}
                                     component={Link}

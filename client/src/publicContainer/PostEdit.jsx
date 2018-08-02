@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,6 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import isEditingAction from '../store/actions/isEditingAction';
+import isNotEditingAction from '../store/actions/isNotEditingAction';
 
 const styles = {
     moveIcon: {
@@ -42,11 +45,15 @@ class PostEdit extends React.Component {
     };
 
     handleClickOpen = () => {
+        const { isEditingAction } = this.props;
         this.setState({ open: true });
+        isEditingAction();
     };
 
     handleClose = () => {
+        const { isNotEditingAction } = this.props;
         this.setState({ open: false });
+        isNotEditingAction();
     };
 
     render() {
@@ -66,11 +73,11 @@ class PostEdit extends React.Component {
                             <Typography variant="title" color="inherit" className={classes.flex}>
                                 Editing: {title}
                             </Typography>
-                            <Button color="secondary" onClick={this.handleClose}>
+                            <Button variant="contained" color="secondary" onClick={this.handleClose}>
                                 Delete
                             </Button>
                             <Button color="inherit" onClick={this.handleClose}>
-                                Save
+                                Update
                             </Button>
                         </Toolbar>
                     </AppBar>
@@ -83,4 +90,13 @@ class PostEdit extends React.Component {
     }
 }
 
-export default withStyles(styles)(PostEdit);
+const mapStateToProps = state => ({
+    isEditing: state.isEditing,
+});
+
+export default withStyles(styles)(
+    connect(
+        mapStateToProps,
+        { isEditingAction, isNotEditingAction }
+    )(PostEdit)
+);
