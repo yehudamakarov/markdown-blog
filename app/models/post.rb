@@ -6,7 +6,7 @@ class Post < ApplicationRecord
     
     def self.new_from_params(params)
         post = self.new do |post|
-            post.title = params[:title].titlecase
+            post.title = params[:title].titlecase.strip
             post.slug = params[:title].downcase.split(' ').join('-')
             post.description = params[:description]
             post.content = params[:content]
@@ -14,6 +14,17 @@ class Post < ApplicationRecord
             post.tags = params[:tags]
         end
     end
+
+    def update_from_params(params)
+        self.tags.delete_all
+        self.title = params[:title].titlecase.strip
+        self.slug = params[:title].downcase.split(' ').join('-')
+        self.description = params[:description]
+        self.content = params[:content]
+        self.cover_image = params[:cover_image]
+        self.tags = params[:tags]
+    end
+    
 
     def tags=(tags)
         tags.each do |tag_string|

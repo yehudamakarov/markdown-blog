@@ -10,24 +10,30 @@ import Icon from '@material-ui/core/Icon';
 import SaveIcon from '@material-ui/icons/Save';
 
 const styles = theme => ({
-  button: {
-    marginBottom: theme.spacing.unit,
-  },
-  rightIcon: {
-    marginLeft: theme.spacing.unit,
-  },
+    button: {
+        marginBottom: theme.spacing.unit,
+    },
+    rightIcon: {
+        marginLeft: theme.spacing.unit,
+    },
 });
 
 function SubmitPostButton(props) {
-  const { onPostSubmit, classes } = props;
-  return (
-    <div>
-      <Button fullWidth onClick={() => onPostSubmit()} variant="contained" color="secondary" className={classes.button}>
-        Submit
-        <CloudUploadIcon className={classes.rightIcon} />
-      </Button>
-    </div>
-  );
+    const { isEditing, onPostSubmit, classes } = props;
+    return (
+        <div>
+            <Button
+                fullWidth
+                onClick={() => onPostSubmit()}
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+            >
+                {isEditing ? 'Update' : 'Submit'}
+                <CloudUploadIcon className={classes.rightIcon} />
+            </Button>
+        </div>
+    );
 }
 
 export default withStyles(styles)(SubmitPostButton);

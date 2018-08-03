@@ -39,6 +39,9 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Debugger
   gem 'pry'
+#   Table Views
+gem 'hirb' 
+
 end
 
 group :development do

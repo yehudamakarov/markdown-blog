@@ -20,7 +20,8 @@ import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
 import FormatListNumbered from '@material-ui/icons/FormatListNumbered';
 import CheckBox from '@material-ui/icons/CheckBox';
 import removeCoverImageWithUrlAction from '../../../../store/actions/removeCoverImageWithUrlAction';
-import submitPostAction from '../../../../store/actions/submitPostAction';
+import addPostAction from '../../../../store/actions/addPostAction';
+import updatePostAction from '../../../../store/actions/updatePostAction';
 import CoverImageUploader from './CoverImageUploader';
 import ImageUploader from './ImageUploader';
 import SubmitPostButton from './SubmitPostButton';
@@ -73,7 +74,7 @@ class MarkdownEditor extends React.Component {
     }
 
     onPostSubmit = () => {
-        const { submitPostAction } = this.props;
+        const { isEditing, addPostAction, updatePostAction, id } = this.props;
         const {
             title,
             description,
@@ -81,30 +82,45 @@ class MarkdownEditor extends React.Component {
             coverImage,
             mdeState: { markdown: content },
         } = this.state;
-        submitPostAction({
-            post: {
-                title,
-                description,
-                tags,
-                cover_image: coverImage,
-                content,
-            },
-            // make sure that when setting the state properties here, that the state object
-            // is clean (only has property names matching with model attributes) when it makes it to the rails controller.
-        })
-            .then(resp => {
-                // On success, can set the state to have property that evaluates to
-                // true. And a property with the new post's slug. and render a
-                // redirect component down below. On the state update, component
-                // will rerender the redirect to the new route.
-                console.log('resp :', resp);
+        if (isEditing) {
+            updatePostAction(
+                {
+                    post: {
+                        title,
+                        description,
+                        tags,
+                        cover_image: coverImage,
+                        content,
+                    },
+                },
+                id
+            );
+        } else {
+            addPostAction({
+                post: {
+                    title,
+                    description,
+                    tags,
+                    cover_image: coverImage,
+                    content,
+                },
+                // make sure that when setting the state properties here, that the state object
+                // is clean (only has property names matching with model attributes) when it makes it to the rails controller.
             })
-            .catch(error => {
-                // On error, everything should rerender but with appropriate error
-                // message. which means set a state with error properties.
-                console.log('error :', error);
-                console.log('error.response :', error.response);
-            });
+                .then(resp => {
+                    // On success, can set the state to have property that evaluates to
+                    // true. And a property with the new post's slug. and render a
+                    // redirect component down below. On the state update, component
+                    // will rerender the redirect to the new route.
+                    console.log('resp :', resp);
+                })
+                .catch(error => {
+                    // On error, everything should rerender but with appropriate error
+                    // message. which means set a state with error properties.
+                    console.log('error :', error);
+                    console.log('error.response :', error.response);
+                });
+        }
     };
 
     onUrlDelete = () => {
@@ -185,7 +201,7 @@ class MarkdownEditor extends React.Component {
             ? Object.entries(this.props.coverImagesWithUrl[0]).map(([filename, url]) => url)[0]
             : null;
         const { mdeState, title, description, tags, coverImage } = this.state;
-        const { tagNames } = this.props;
+        const { isEditing, tagNames } = this.props;
         const style =
             this.state.coverImage === previewUrl
                 ? {
@@ -240,7 +256,7 @@ class MarkdownEditor extends React.Component {
                         />
                     </Grid>
                 </Grid>
-                <SubmitPostButton onPostSubmit={this.onPostSubmit} />
+                <SubmitPostButton isEditing={isEditing} onPostSubmit={this.onPostSubmit} />
                 <Grid container direction="column" spacing={16}>
                     <Grid item>
                         <ReactMde
@@ -276,5 +292,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { fetchTags, removeCoverImageWithUrlAction, submitPostAction }
+    { fetchTags, removeCoverImageWithUrlAction, addPostAction, updatePostAction }
 )(MarkdownEditor);

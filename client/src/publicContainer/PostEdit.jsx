@@ -62,7 +62,7 @@ class PostEdit extends React.Component {
     };
 
     render() {
-        const { classes, title, description, tags, content, coverImage } = this.props;
+        const { classes, title, description, tags, content, coverImage, id } = this.props;
         const { open } = this.state;
         return (
             <div className={classes.inlineButton}>
@@ -81,9 +81,6 @@ class PostEdit extends React.Component {
                             <Button variant="contained" color="secondary" onClick={this.handleClose}>
                                 Delete
                             </Button>
-                            <Button color="inherit" onClick={this.handleClose}>
-                                Update
-                            </Button>
                         </Toolbar>
                     </AppBar>
                     <Paper style={{ paddingTop: '64px' }}>
@@ -92,6 +89,7 @@ class PostEdit extends React.Component {
                                 <Typography component="div">
                                     <div style={{ padding: 24 }}>
                                         <MarkdownEditor
+                                            id={id}
                                             title={title}
                                             description={description}
                                             tags={tags}

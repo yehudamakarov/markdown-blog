@@ -1,4 +1,9 @@
 class PostsController < ApplicationController
+    def index
+        @posts = Post.all
+        render json: @posts, status: :ok
+    end
+
     def create
         @post = Post.new_from_params(post_params)
         if @post.save
@@ -11,11 +16,20 @@ class PostsController < ApplicationController
     def show
     end
     
-    def index
-        @posts = Post.all
-        render json: @posts, status: :ok
+    def update
+        @post = Post.find(params[:id])
+        @post.update_from_params(post_params)
+        if @post.save
+            render json: @post, status: 201
+        else
+            render json: @post.errors, status: :unprocessable_entity
+        end
     end
 
+    def destroy
+        
+    end
+    
     def destroy
     end
 

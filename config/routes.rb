@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy'
   get '/sessiontest', to: 'sessions#sessiontest'
 
-  resources :posts, only: [:create, :show, :index, :destroy]
+  resources :posts, only: [:index, :create, :show, :update, :destroy]
   resources :tags, only: [:index]
 
 end

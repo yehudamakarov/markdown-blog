@@ -64,6 +64,7 @@ const PostCard = ({ match, classes, id, tags, title, slug, description, content,
                     </Grid>
                     <Grid item>
                         <PostEdit
+                            id={id}
                             title={title}
                             description={description}
                             tags={tags}
