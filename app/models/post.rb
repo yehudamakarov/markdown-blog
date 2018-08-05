@@ -16,7 +16,7 @@ class Post < ApplicationRecord
     end
 
     def update_from_params(params)
-        self.tags.delete_all
+        self.tags.clear
         self.title = params[:title].titlecase.strip
         self.slug = params[:title].downcase.split(' ').join('-')
         self.description = params[:description]

@@ -12,9 +12,15 @@ class PostList extends Component {
 
     render() {
         const { match, posts } = this.props;
+        const filteredPosts = match.params.tag
+            ? posts.filter(post => {
+                  const tagNames = post.tags.map(tag => tag.name);
+                  return tagNames.includes(match.params.tag);
+              })
+            : posts;
         return (
             <Grid container justify="space-around" alignItems="center" direction="column" spacing={16}>
-                {posts.map(post => (
+                {filteredPosts.map(post => (
                     <PostCard
                         tags={post.tags}
                         match={match}
