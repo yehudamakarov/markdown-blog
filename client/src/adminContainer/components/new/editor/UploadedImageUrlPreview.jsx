@@ -22,7 +22,7 @@ function UploadedImageUrlPreview(props) {
                 {url.url}
             </Typography>
             <hr />
-            <img style={{ maxWidth: '100%' }} src={url.url} />
+            <img style={{ maxWidth: '100%' }} src={url.url} alt="" />
             <Typography component="p">{url.filename}</Typography>
         </Paper>
     );
