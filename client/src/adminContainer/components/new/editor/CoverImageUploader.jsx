@@ -128,7 +128,7 @@ class CoverImageUploader extends Component {
                     {coverImagesWithUrl.length === 1 ? (
                         <UploadedImageUrlPreview onUrlPrepare={onUrlPrepare} onUrlDelete={onUrlDelete} url={url} />
                     ) : (
-                        <GridList style={{ flexWrap: 'nowrap', transform: 'translateZ(0)' }} cols={2}>
+                        <GridList style={{ flexWrap: 'nowrap', transform: 'translateZ(0)' }} cols={1}>
                             {coverImagesWithPreviewAndBase64.map((imageObject, index) => (
                                 <GridListTile key={`imageObject_${imageObject.preview}`} rows={1.5}>
                                     <img src={imageObject.preview} alt="" />
