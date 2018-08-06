@@ -30,7 +30,7 @@ const styles = theme => ({
 });
 
 const PostCard = ({ match, classes, id, tags, title, slug, description, content, coverImage, created_at }) => (
-    <Grid item xs={8} lg={6}>
+    <Grid item xs={6} lg={4}>
         <Card className={classes.card}>
             <CardMedia image={coverImage}>
                 <img className={classes.media} src={coverImage} alt="" />
