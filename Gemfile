@@ -41,6 +41,8 @@ group :development, :test do
   gem 'pry'
 #   Table Views
 gem 'hirb' 
+# seed generator
+gem 'seed_dump'
 
 end
 

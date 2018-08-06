@@ -9,6 +9,10 @@ const styles = theme => ({
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
+        width: '100%',
+    },
+    header: {
+        wordWrap: 'break-word',
     },
 });
 
@@ -18,7 +22,7 @@ function UploadedImageUrlPreview(props) {
     return (
         <Paper className={classes.root} elevation={8}>
             <FloatingActionButtons url={url} onUrlPrepare={onUrlPrepare} onUrlDelete={onUrlDelete} />
-            <Typography variant="headline" component="h5">
+            <Typography className={classes.header} variant="headline" component="h5">
                 {url.url}
             </Typography>
             <hr />

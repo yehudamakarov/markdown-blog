@@ -14,8 +14,8 @@ class PostList extends Component {
         const { match, posts } = this.props;
         const filteredPosts = match.params.tag
             ? posts.filter(post => {
-                  const tagNames = post.tags.map(tag => tag.name);
-                  return tagNames.includes(match.params.tag);
+                  const tagSlugs = post.tags.map(tag => tag.slug);
+                  return tagSlugs.includes(match.params.tag);
               })
             : posts;
         return (
