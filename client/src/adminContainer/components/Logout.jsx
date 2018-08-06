@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { logoutAction } from '../../store/actions/loginAction';
 
 const Logout = withRouter(
-    ({ history, isLoggedIn }) =>
+    ({ history, isLoggedIn, logoutAction }) =>
         isLoggedIn === true ? (
             <Button
                 color="inherit"
