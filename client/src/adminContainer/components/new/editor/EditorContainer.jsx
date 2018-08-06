@@ -74,7 +74,7 @@ class MarkdownEditor extends React.Component {
     }
 
     onPostSubmit = () => {
-        const { isEditing, addPostAction, updatePostAction, id } = this.props;
+        const { fetchTags, isEditing, addPostAction, updatePostAction, id } = this.props;
         const {
             title,
             description,
@@ -94,7 +94,7 @@ class MarkdownEditor extends React.Component {
                     },
                 },
                 id
-            );
+            ).then(() => fetchTags());
         } else {
             addPostAction({
                 post: {
@@ -106,20 +106,20 @@ class MarkdownEditor extends React.Component {
                 },
                 // make sure that when setting the state properties here, that the state object
                 // is clean (only has property names matching with model attributes) when it makes it to the rails controller.
-            })
-                .then(resp => {
-                    // On success, can set the state to have property that evaluates to
-                    // true. And a property with the new post's slug. and render a
-                    // redirect component down below. On the state update, component
-                    // will rerender the redirect to the new route.
-                    console.log('resp :', resp);
-                })
-                .catch(error => {
-                    // On error, everything should rerender but with appropriate error
-                    // message. which means set a state with error properties.
-                    console.log('error :', error);
-                    console.log('error.response :', error.response);
-                });
+            }).then(() => fetchTags());
+            // .then(resp => {
+            // On success, can set the state to have property that evaluates to
+            // true. And a property with the new post's slug. and render a
+            // redirect component down below. On the state update, component
+            // will rerender the redirect to the new route.
+            // console.log('resp :', resp);
+            // })
+            // .catch(error => {
+            // On error, everything should rerender but with appropriate error
+            // message. which means set a state with error properties.
+            // console.log('error :', error);
+            // console.log('error.response :', error.response);
+            // });
         }
     };
 
@@ -205,10 +205,10 @@ class MarkdownEditor extends React.Component {
         const style =
             this.state.coverImage === previewUrl
                 ? {
-                      borderStyle: 'solid',
-                      borderRadius: '4px',
-                      borderColor: '#689f38',
-                  }
+                    borderStyle: 'solid',
+                    borderRadius: '4px',
+                    borderColor: '#689f38',
+                }
                 : {};
         return (
             <div style={{ height: '100%' }}>

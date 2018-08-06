@@ -145,7 +145,7 @@ class TitleBar extends React.Component {
                 </div>
                 <Divider />
                 <List>
-                    {tags.map(tag => (
+                    {tags.filter(tag => tag.amountOfPosts !== 0).map(tag => (
                         <ListItem
                             key={tag.name}
                             button

@@ -1,13 +1,15 @@
 import axios from 'axios';
 
-const updatePostAction = (postToUpdateFromState, id) => dispatch =>
-    axios.patch(`/posts/${id}`, postToUpdateFromState).then(() =>
+const destroyPostAction = id => dispatch => {
+    axios.delete(`/posts/${id}`).then(() => {
         axios.get('/posts').then(resp => {
             const posts = resp.data;
             dispatch({
                 type: 'ADD_FETCHED_POSTS',
                 payload: posts,
             });
-        })
-    );
-export default updatePostAction;
+        });
+    });
+};
+
+export default destroyPostAction;

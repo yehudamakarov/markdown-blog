@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
     has_and_belongs_to_many :tags
+    before_destroy { tags.clear }
 
     validates :title, presence: true, uniqueness: { case_sensitive: false }
     validates :description, presence: true

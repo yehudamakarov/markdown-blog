@@ -27,10 +27,8 @@ class PostsController < ApplicationController
     end
 
     def destroy
-        
-    end
-    
-    def destroy
+        @post = Post.find(parmas[:id])
+        @post.destroy
     end
 
     private
