@@ -14,46 +14,6 @@ import addPreviewAndBase64ImageAction from '../../../../store/actions/addPreview
 import removeImageFromPreviewAndBase64Action from '../../../../store/actions/removeImageFromPreviewAndBase64Action';
 
 class ImageUploader extends Component {
-    // TO-DO
-    // - Reject anything not an image for imgur
-
-    onDrop = acceptedFiles => {
-        // Loop over each file.
-        acceptedFiles.forEach(fileObject => {
-            // Make a FileReader
-            const reader = new FileReader();
-            // Tell the FileReader what to do to when it is done with its file
-            reader.onload = ({ target: reader }) => {
-                // Prepare the Base64
-                const base64ToUpload = reader.result
-                    .replace('data:image/png;base64,', '')
-                    .replace('data:image/jpeg;base64,', '');
-                // Make an object for the image where { Filename: Base64 and preview:
-                // Preview Url }
-                const imageObjectWithPreviewAndBase64 = {
-                    [fileObject.name]: base64ToUpload,
-                    preview: fileObject.preview,
-                };
-                // Send that object to the store.
-                this.props.addPreviewAndBase64ImageAction(imageObjectWithPreviewAndBase64);
-            };
-            // Do said above for the file on this iteration of the images.
-            reader.readAsDataURL(fileObject);
-        });
-    };
-
-    // Send images from the redux store { Filename: Base64 and preview:
-    // Preview Url } to imgur, remove them from the store and be left
-    // with redux store with { Filename: Url }
-    handleUploadClick = event => {
-        this.props.imageUploadAction(this.props.imagesWithPreviewAndBase64);
-    };
-
-    // Remove an image from the redux store and preview pane
-    handlePictureRemove = index => {
-        this.props.removeImageFromPreviewAndBase64Action(index);
-    };
-
     dropzoneStyle = {
         width: '100%',
         height: '100%',
@@ -71,7 +31,6 @@ class ImageUploader extends Component {
         width: '100%',
         height: '100%',
         textAlign: 'center',
-        background: '#6ec6ff',
         borderRadius: '4px',
         paddingTop: '8px',
         paddingBottom: '8px',
@@ -80,8 +39,52 @@ class ImageUploader extends Component {
         background: '#689f38',
         color: '#cfd8dc',
     };
+    // TO-DO
+    // - Reject anything not an image for imgur
+
+    onDrop = acceptedFiles => {
+        const { addPreviewAndBase64ImageAction } = this.props;
+        // Loop over each file.
+        acceptedFiles.forEach(fileObject => {
+            // Make a FileReader
+            // eslint-disable-next-line no-undef
+            const reader = new FileReader();
+            // Tell the FileReader what to do to when it is done with its file
+            reader.onload = ({ target: reader }) => {
+                // Prepare the Base64
+                const base64ToUpload = reader.result
+                    .replace('data:image/png;base64,', '')
+                    .replace('data:image/jpeg;base64,', '');
+                // Make an object for the image where { Filename: Base64 and preview:
+                // Preview Url }
+                const imageObjectWithPreviewAndBase64 = {
+                    [fileObject.name]: base64ToUpload,
+                    preview: fileObject.preview,
+                };
+                // Send that object to the store.
+                addPreviewAndBase64ImageAction(imageObjectWithPreviewAndBase64);
+            };
+            // Do said above for the file on this iteration of the images.
+            reader.readAsDataURL(fileObject);
+        });
+    };
+
+    // Send images from the redux store { Filename: Base64 and preview:
+    // Preview Url } to imgur, remove them from the store and be left
+    // with redux store with { Filename: Url }
+    handleUploadClick = () => {
+        const { imageUploadAction, imagesWithPreviewAndBase64 } = this.props;
+        imageUploadAction(imagesWithPreviewAndBase64);
+    };
+
+    // Remove an image from the redux store and preview pane
+    handlePictureRemove = index => {
+        const { removeImageFromPreviewAndBase64Action } = this.props;
+        removeImageFromPreviewAndBase64Action(index);
+    };
 
     render() {
+        const { imagesWithPreviewAndBase64 } = this.props;
         return (
             <Paper elevation={8} style={{ padding: '1%', paddingBottom: '2%' }}>
                 <Grid container justify="center" spacing={16}>
@@ -115,9 +118,9 @@ class ImageUploader extends Component {
                     }}
                 >
                     <GridList style={{ flexWrap: 'nowrap', transform: 'translateZ(0)' }} cols={2.5}>
-                        {this.props.imagesWithPreviewAndBase64.map((imageObject, index) => (
-                            <GridListTile key={index} rows={2}>
-                                <img src={imageObject.preview} />
+                        {imagesWithPreviewAndBase64.map((imageObject, index) => (
+                            <GridListTile key={`imageObject_${imageObject.preview}`} rows={2}>
+                                <img src={imageObject.preview} alt="" />
                                 <GridListTileBar
                                     title={Object.keys(imageObject).find(
                                         imageObjectKey => imageObjectKey !== 'preview'

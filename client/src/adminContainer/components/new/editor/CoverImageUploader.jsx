@@ -48,6 +48,7 @@ class CoverImageUploader extends Component {
         // Loop over each file.
         acceptedFiles.forEach(fileObject => {
             // Make a FileReader
+            // eslint-disable-next-line no-undef
             const reader = new FileReader();
             // Tell the FileReader what to do to when it is done with its file
             reader.onload = ({ target: reader }) => {
@@ -72,13 +73,15 @@ class CoverImageUploader extends Component {
     // Send images from the redux store { Filename: Base64 and preview:
     // Preview Url } to imgur, remove them from the store and be left
     // with redux store with { Filename: Url }
-    handleUploadClick = event => {
-        this.props.coverImageUploadAction(this.props.coverImagesWithPreviewAndBase64);
+    handleUploadClick = () => {
+        const { coverImageUploadAction, coverImagesWithPreviewAndBase64 } = this.props;
+        coverImageUploadAction(coverImagesWithPreviewAndBase64);
     };
 
     // Remove an image from the redux store and preview pane
     handlePictureRemove = index => {
-        this.props.removeCoverImageFromPreviewAndBase64Action(index);
+        const { removeCoverImageFromPreviewAndBase64Action } = this.props;
+        removeCoverImageFromPreviewAndBase64Action(index);
     };
 
     render() {

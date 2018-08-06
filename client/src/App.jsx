@@ -4,7 +4,6 @@ import PublicContainer from './publicContainer/PublicContainer';
 import AdminContainer from './adminContainer/AdminContainer';
 import Login from './adminContainer/components/Login';
 import PrivateRoute from './adminContainer/utilities/PrivateRoute';
-import './App.css';
 
 const App = () => (
     <div>

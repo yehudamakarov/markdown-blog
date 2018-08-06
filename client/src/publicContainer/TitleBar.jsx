@@ -34,6 +34,7 @@ const styles = theme => ({
         width: '100%',
     },
     appBar: {
+        // eslint-disable-next-line no-undef
         position: window.location.toString().includes('admin') ? 'absolute' : 'fixed',
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,

@@ -1,14 +1,11 @@
 const tagsReducer = (state = [], action) => {
     switch (action.type) {
-    case 'ADD_FETCHED_TAGS':
-        
-        return [
-            ...action.payload
-        ]
+        case 'ADD_FETCHED_TAGS':
+            return [...action.payload];
 
-    default:
-        return state;
+        default:
+            return state;
     }
-}
+};
 
 export default tagsReducer;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import MarkdownEditor from './editor/EditorContainer';
 
 const Dashboard = () => <MarkdownEditor />;

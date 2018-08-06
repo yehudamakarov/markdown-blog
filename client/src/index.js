@@ -23,7 +23,7 @@ ReactDOM.render(
         <Provider store={store}>
             <App />
         </Provider>
-    </MuiThemeProvider>,
+    </MuiThemeProvider>, // eslint-disable-next-line no-undef
     document.getElementById('root')
 );
 registerServiceWorker();

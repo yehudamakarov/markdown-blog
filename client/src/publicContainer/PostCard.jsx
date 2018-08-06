@@ -39,11 +39,9 @@ const PostCard = ({
     id,
     tags,
     title,
-    slug,
     description,
     content,
     coverImage,
-    created_at,
 }) => (
     <Grid item xs={6} lg={4}>
         <Card className={classes.card}>

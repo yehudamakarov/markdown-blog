@@ -168,8 +168,10 @@ class MarkdownEditor extends React.Component {
 
     handleCorrectTags = () => {
         const { imagesWithUrl } = this.props;
+        const { mdeState } = this.state;
+        // eslint-disable-next-line no-useless-escape
         const regex = /\(resources([^\)]+)\)/g;
-        const correctedMarkdown = this.state.mdeState.markdown.replace(regex, match => {
+        const correctedMarkdown = mdeState.markdown.replace(regex, match => {
             const correspondingImageObject = imagesWithUrl.find(
                 imageObject => match === `(resources/${Object.keys(imageObject)[0]})`
             );
@@ -185,8 +187,8 @@ class MarkdownEditor extends React.Component {
                 },
             },
             () => {
-                if (this.state.mdeState.markdown.match(regex)) {
-                    this.tagsLeftToChange = this.state.mdeState.markdown.match(regex).length;
+                if (mdeState.markdown.match(regex)) {
+                    this.tagsLeftToChange = mdeState.markdown.match(regex).length;
                 }
             }
         );
@@ -197,18 +199,20 @@ class MarkdownEditor extends React.Component {
     };
 
     render() {
-        const previewUrl = this.props.coverImagesWithUrl[0]
-            ? Object.entries(this.props.coverImagesWithUrl[0]).map(([filename, url]) => url)[0]
-            : null;
         const { mdeState, title, description, tags, coverImage } = this.state;
-        const { isEditing, tagNames } = this.props;
+
+        const { isEditing, tagNames, coverImagesWithUrl } = this.props;
+
+        const previewUrl = coverImagesWithUrl[0] // eslint-disable-next-line no-unused-vars
+            ? Object.entries(coverImagesWithUrl[0]).map(([filename, url]) => url)[0]
+            : null;
         const style =
-            this.state.coverImage === previewUrl
+            coverImage === previewUrl
                 ? {
-                    borderStyle: 'solid',
-                    borderRadius: '4px',
-                    borderColor: '#689f38',
-                }
+                      borderStyle: 'solid',
+                      borderRadius: '4px',
+                      borderColor: '#689f38',
+                  }
                 : {};
         return (
             <div style={{ height: '100%' }}>
@@ -233,7 +237,7 @@ class MarkdownEditor extends React.Component {
                             />
                             <ChipInput
                                 style={{ marginRight: '3vh', marginTop: '3vh', width: '90%' }}
-                                value={this.state.tags}
+                                value={tags}
                                 label="Tags"
                                 onAdd={tag => this.handleAddTag(tag)}
                                 onDelete={(tag, index) => this.handleDeleteTag(tag, index)}
@@ -265,7 +269,7 @@ class MarkdownEditor extends React.Component {
                             }}
                             layout="horizontal"
                             onChange={this.handleValueChange}
-                            editorState={this.state.mdeState}
+                            editorState={mdeState}
                             generateMarkdownPreview={markdown => Promise.resolve(this.converter.makeHtml(markdown))}
                         />
                     </Grid>
