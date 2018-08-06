@@ -1,8 +1,14 @@
 import axios from 'axios';
 
-const addPostAction = newPostFromState => dispatch => {
-    console.log('newPostFromState :', newPostFromState);
-    return axios.post('/posts', newPostFromState);
-};
+const addPostAction = newPostFromState => dispatch =>
+    axios.post('/posts', newPostFromState).then(() => {
+        axios.get('/posts').then(resp => {
+            const posts = resp.data;
+            dispatch({
+                type: 'ADD_FETCHED_POSTS',
+                payload: posts,
+            });
+        });
+    });
 
 export default addPostAction;
