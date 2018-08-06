@@ -32,6 +32,7 @@ const styles = theme => ({
 });
 
 const PostCard = ({
+    isLoggedIn,
     destroyPostAction,
     match,
     classes,
@@ -76,28 +77,32 @@ const PostCard = ({
                     <Grid item>
                         <PostView description={description} title={title} content={content} />
                     </Grid>
-                    <Grid item>
-                        <PostEdit
-                            id={id}
-                            title={title}
-                            description={description}
-                            tags={tags}
-                            content={content}
-                            coverImage={coverImage}
-                        />
-                        <Button onClick={() => destroyPostAction(id)} size="small" color="primary">
-                            Delete
-                        </Button>
-                    </Grid>
+                    {isLoggedIn && (
+                        <Grid item>
+                            <PostEdit
+                                id={id}
+                                title={title}
+                                description={description}
+                                tags={tags}
+                                content={content}
+                                coverImage={coverImage}
+                            />
+                            <Button onClick={() => destroyPostAction(id)} size="small" color="primary">
+                                Delete
+                            </Button>
+                        </Grid>
+                    )}
                 </Grid>
             </CardActions>
         </Card>
     </Grid>
 );
 
+const mapStateToProps = state => ({ isLoggedIn: state.auth.isLoggedIn });
+
 export default withStyles(styles)(
     connect(
-        null,
+        mapStateToProps,
         { destroyPostAction }
     )(PostCard)
 );
