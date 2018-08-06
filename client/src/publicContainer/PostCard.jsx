@@ -9,8 +9,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
 import PostView from './PostView';
 import PostEdit from './PostEdit';
+import destroyPostAction from '../store/actions/destroyPostAction';
 
 const styles = theme => ({
     card: {
@@ -29,7 +31,19 @@ const styles = theme => ({
     },
 });
 
-const PostCard = ({ match, classes, id, tags, title, slug, description, content, coverImage, created_at }) => (
+const PostCard = ({
+    destroyPostAction,
+    match,
+    classes,
+    id,
+    tags,
+    title,
+    slug,
+    description,
+    content,
+    coverImage,
+    created_at,
+}) => (
     <Grid item xs={6} lg={4}>
         <Card className={classes.card}>
             <CardMedia image={coverImage}>
@@ -71,7 +85,7 @@ const PostCard = ({ match, classes, id, tags, title, slug, description, content,
                             content={content}
                             coverImage={coverImage}
                         />
-                        <Button size="small" color="primary">
+                        <Button onClick={() => destroyPostAction(id)} size="small" color="primary">
                             Delete
                         </Button>
                     </Grid>
@@ -81,4 +95,9 @@ const PostCard = ({ match, classes, id, tags, title, slug, description, content,
     </Grid>
 );
 
-export default withStyles(styles)(PostCard);
+export default withStyles(styles)(
+    connect(
+        null,
+        { destroyPostAction }
+    )(PostCard)
+);
