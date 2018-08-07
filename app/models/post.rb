@@ -2,8 +2,8 @@ class Post < ApplicationRecord
     has_and_belongs_to_many :tags
     before_destroy { tags.clear }
 
-    validates :title, presence: true, uniqueness: { case_sensitive: false }
-    validates :description, presence: true
+    validates :title, presence: { message: "Don't forget to title your post!" }, uniqueness: { case_sensitive: false, message: "You already made a post with that name" }
+    validates :description, presence: { message: "You should describe what your post is about." }
     
     def self.new_from_params(params)
         post = self.new do |post|

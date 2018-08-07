@@ -57,6 +57,7 @@ class EditorContainer extends React.Component {
             tags: [],
             coverImage: '',
             success: false,
+            errors: {},
         };
         this.converter = new Showdown.Converter({ tables: true, simplifiedAutoLink: true });
     }
@@ -72,7 +73,7 @@ class EditorContainer extends React.Component {
     }
 
     onPostSubmit = () => {
-        const { fetchPosts, fetchTags, isEditing, addPostAction, updatePostAction, id } = this.props;
+        const { isEditing, addPostAction, updatePostAction, id } = this.props;
         const {
             title,
             description,
@@ -93,12 +94,13 @@ class EditorContainer extends React.Component {
                 },
                 id
             )
-                .then(resp => {
-                    console.log('resp :', resp);
-                    fetchTags();
-                })
+                .then(this.handleSuccess)
                 .catch(error => {
-                    console.log('error.response :', error.response);
+                    this.setState({
+                        errors: {
+                            ...error.response.data,
+                        },
+                    });
                 });
         } else {
             addPostAction({
@@ -110,41 +112,14 @@ class EditorContainer extends React.Component {
                     content,
                 },
             })
-                .then(() => {
-                    fetchTags();
-                    fetchPosts();
-                    this.setState({
-                        mdeState: {
-                            markdown: '# Enter markdown post...',
-                        },
-                        title: '',
-                        description: '',
-                        tags: [],
-                        coverImage: '',
-                        success: true,
-                    });
-                    setTimeout(() => {
-                        this.setState({
-                            success: false,
-                        });
-                    }, 2000);
-                })
+                .then(this.handleSuccess)
                 .catch(error => {
-                    console.log('error.response :', error.response);
+                    this.setState({
+                        errors: {
+                            ...error.response.data,
+                        },
+                    });
                 });
-            // .then(resp => {
-            // On success, can set the state to have property that evaluates to
-            // true. And a property with the new post's slug. and render a
-            // redirect component down below. On the state update, component
-            // will rerender the redirect to the new route.
-            // console.log('resp :', resp);
-            // })
-            // .catch(error => {
-            // On error, everything should rerender but with appropriate error
-            // message. which means set a state with error properties.
-            // console.log('error :', error);
-            // console.log('error.response :', error.response);
-            // });
         }
     };
 
@@ -166,6 +141,27 @@ class EditorContainer extends React.Component {
             ...prevState,
             coverImage: url.url,
         }));
+    };
+
+    handleSuccess = () => {
+        const { fetchTags, fetchPosts } = this.props;
+        fetchTags();
+        fetchPosts();
+        this.setState({
+            mdeState: {
+                markdown: '# Enter markdown post...',
+            },
+            title: '',
+            description: '',
+            tags: [],
+            coverImage: '',
+            success: true,
+        });
+        setTimeout(() => {
+            this.setState({
+                success: false,
+            });
+        }, 2000);
     };
 
     handleAddTag = tag => {
@@ -222,7 +218,7 @@ class EditorContainer extends React.Component {
     };
 
     render() {
-        const { success, mdeState, title, description, tags, coverImage } = this.state;
+        const { errors, success, mdeState, title, description, tags, coverImage } = this.state;
         const { isEditing, tagNames, coverImagesWithUrl } = this.props;
         const previewUrl = coverImagesWithUrl[0] // eslint-disable-next-line no-unused-vars
             ? Object.entries(coverImagesWithUrl[0]).map(([filename, url]) => url)[0]
@@ -241,6 +237,8 @@ class EditorContainer extends React.Component {
                     <Grid item sm={7}>
                         <form>
                             <TextField
+                                error={!!errors.title}
+                                helperText={errors.title ? errors.title : null}
                                 onChange={this.handleFormChange}
                                 name="title"
                                 style={{ marginRight: '3vh', width: '90%' }}
@@ -248,6 +246,8 @@ class EditorContainer extends React.Component {
                                 value={title}
                             />
                             <TextField
+                                error={!!errors.description}
+                                helperText={errors.description ? errors.description : null}
                                 onChange={this.handleFormChange}
                                 name="description"
                                 style={{ marginRight: '3vh', marginTop: '3vh', width: '90%' }}
