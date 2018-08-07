@@ -4,6 +4,7 @@ import * as Showdown from 'showdown';
 import 'react-mde/lib/styles/css/react-mde-all.css';
 import './customEditorStyle.css';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -26,6 +27,7 @@ import CoverImageUploader from './CoverImageUploader';
 import ImageUploader from './ImageUploader';
 import SubmitPostButton from './SubmitPostButton';
 import fetchTags from '../../../../store/actions/fetchTags';
+import fetchPosts from '../../../../store/actions/fetchPosts';
 
 const resizeIcons = { fontSize: '2.1em' };
 
@@ -43,7 +45,7 @@ const icons = {
     tasks: <CheckBox style={resizeIcons} />,
 };
 
-class MarkdownEditor extends React.Component {
+class EditorContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -54,6 +56,7 @@ class MarkdownEditor extends React.Component {
             description: '',
             tags: [],
             coverImage: '',
+            success: false,
         };
         this.converter = new Showdown.Converter({ tables: true, simplifiedAutoLink: true });
     }
@@ -61,11 +64,6 @@ class MarkdownEditor extends React.Component {
     componentDidMount() {
         const { fetchTags, isEditing } = this.props;
         fetchTags();
-        // Make a store property `isEditing: Boolean`
-        // map that state to these props.
-        // this component will be passed the post from clicking its edit button
-        // call setState with the values of the postObject passed in IF isEditing === true
-        // anything closing the dialog should set isEditing back to false
         if (isEditing) {
             const { title, description, tags, content, coverImage } = this.props;
             const tagNames = tags.map(tagObject => tagObject.title);
@@ -74,7 +72,7 @@ class MarkdownEditor extends React.Component {
     }
 
     onPostSubmit = () => {
-        const { fetchTags, isEditing, addPostAction, updatePostAction, id } = this.props;
+        const { fetchPosts, fetchTags, isEditing, addPostAction, updatePostAction, id } = this.props;
         const {
             title,
             description,
@@ -94,7 +92,14 @@ class MarkdownEditor extends React.Component {
                     },
                 },
                 id
-            ).then(() => fetchTags());
+            )
+                .then(resp => {
+                    console.log('resp :', resp);
+                    fetchTags();
+                })
+                .catch(error => {
+                    console.log('error.response :', error.response);
+                });
         } else {
             addPostAction({
                 post: {
@@ -104,9 +109,29 @@ class MarkdownEditor extends React.Component {
                     cover_image: coverImage,
                     content,
                 },
-                // make sure that when setting the state properties here, that the state object
-                // is clean (only has property names matching with model attributes) when it makes it to the rails controller.
-            }).then(() => fetchTags());
+            })
+                .then(() => {
+                    fetchTags();
+                    fetchPosts();
+                    this.setState({
+                        mdeState: {
+                            markdown: '# Enter markdown post...',
+                        },
+                        title: '',
+                        description: '',
+                        tags: [],
+                        coverImage: '',
+                        success: true,
+                    });
+                    setTimeout(() => {
+                        this.setState({
+                            success: false,
+                        });
+                    }, 2000);
+                })
+                .catch(error => {
+                    console.log('error.response :', error.response);
+                });
             // .then(resp => {
             // On success, can set the state to have property that evaluates to
             // true. And a property with the new post's slug. and render a
@@ -124,8 +149,6 @@ class MarkdownEditor extends React.Component {
     };
 
     onUrlDelete = () => {
-        // take url out of state, make paper disappear
-        // remove   picture
         this.setState(
             prevState => ({
                 ...prevState,
@@ -199,10 +222,8 @@ class MarkdownEditor extends React.Component {
     };
 
     render() {
-        const { mdeState, title, description, tags, coverImage } = this.state;
-
+        const { success, mdeState, title, description, tags, coverImage } = this.state;
         const { isEditing, tagNames, coverImagesWithUrl } = this.props;
-
         const previewUrl = coverImagesWithUrl[0] // eslint-disable-next-line no-unused-vars
             ? Object.entries(coverImagesWithUrl[0]).map(([filename, url]) => url)[0]
             : null;
@@ -260,7 +281,7 @@ class MarkdownEditor extends React.Component {
                         />
                     </Grid>
                 </Grid>
-                <SubmitPostButton isEditing={isEditing} onPostSubmit={this.onPostSubmit} />
+                <SubmitPostButton isGreen={success} isEditing={isEditing} onPostSubmit={this.onPostSubmit} />
                 <Grid container direction="column" spacing={16}>
                     <Grid item>
                         <ReactMde
@@ -296,5 +317,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { fetchTags, removeCoverImageWithUrlAction, addPostAction, updatePostAction }
-)(MarkdownEditor);
+    { fetchPosts, fetchTags, removeCoverImageWithUrlAction, addPostAction, updatePostAction }
+)(EditorContainer);

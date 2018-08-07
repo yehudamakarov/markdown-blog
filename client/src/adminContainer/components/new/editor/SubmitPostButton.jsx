@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import CloudDoneIcon from '@material-ui/icons/CloudDone';
 
 const styles = theme => ({
     button: {
@@ -12,8 +13,8 @@ const styles = theme => ({
     },
 });
 
-function SubmitPostButton(props) {
-    const { isEditing, onPostSubmit, classes } = props;
+function SubmitPostButton({ isGreen, isEditing, onPostSubmit, classes }) {
+    const buttonValue = isEditing ? 'Update' : 'Submit';
     return (
         <div>
             <Button
@@ -21,10 +22,15 @@ function SubmitPostButton(props) {
                 onClick={() => onPostSubmit()}
                 variant="contained"
                 color="secondary"
+                disabled={isGreen}
                 className={classes.button}
             >
-                {isEditing ? 'Update' : 'Submit'}
-                <CloudUploadIcon className={classes.rightIcon} />
+                {isGreen ? 'Nice!' : buttonValue}
+                {isGreen ? (
+                    <CloudDoneIcon className={classes.rightIcon} />
+                ) : (
+                    <CloudUploadIcon className={classes.rightIcon} />
+                )}
             </Button>
         </div>
     );
