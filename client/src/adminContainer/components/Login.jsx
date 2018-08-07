@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
 import { loginAction } from '../../store/actions/loginAction';
 
 class Login extends Component {
@@ -27,24 +31,38 @@ class Login extends Component {
     render() {
         const { email, password } = this.state;
         const { isLoggedIn } = this.props;
+        const style = { width: '100%', marginRight: 'auto', marginLeft: 'auto', marginBottom: '12px' };
         if (isLoggedIn === true) {
             return <Redirect to="/admin" />;
         }
         return (
-            <div>
-                <form onSubmit={this.onSubmit}>
-                    <div>
-                        Email:
-                        <input type="text" value={email} name="email" onChange={this.onChange} />
-                    </div>
-                    <div>
-                        Password:
-                        <input type="password" value={password} name="password" onChange={this.onChange} />
-                    </div>
-                    <div>
-                        <input type="submit" />
-                    </div>
-                </form>
+            <div style={{ height: '100vh' }}>
+                <Grid style={{ height: '100%' }} container justify="center" alignItems="center">
+                    <Grid item>
+                        <form>
+                            <TextField
+                                style={style}
+                                type="text"
+                                label="Email Address"
+                                value={email}
+                                name="email"
+                                onChange={this.onChange}
+                            />
+                            <TextField
+                                style={style}
+                                type="password"
+                                label="Password"
+                                value={password}
+                                name="password"
+                                onChange={this.onChange}
+                            />
+                            <Button style={style} color="primary" variant="contained" onClick={this.onSubmit}>
+                                <input hidden type="submit" />
+                                Log In
+                            </Button>
+                        </form>
+                    </Grid>
+                </Grid>
             </div>
         );
     }

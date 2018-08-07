@@ -4,7 +4,6 @@ import * as Showdown from 'showdown';
 import 'react-mde/lib/styles/css/react-mde-all.css';
 import './customEditorStyle.css';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -95,13 +94,7 @@ class EditorContainer extends React.Component {
                 id
             )
                 .then(this.handleSuccess)
-                .catch(error => {
-                    this.setState({
-                        errors: {
-                            ...error.response.data,
-                        },
-                    });
-                });
+                .catch(this.handleError);
         } else {
             addPostAction({
                 post: {
@@ -113,13 +106,7 @@ class EditorContainer extends React.Component {
                 },
             })
                 .then(this.handleSuccess)
-                .catch(error => {
-                    this.setState({
-                        errors: {
-                            ...error.response.data,
-                        },
-                    });
-                });
+                .catch(this.handleError);
         }
     };
 
@@ -162,6 +149,14 @@ class EditorContainer extends React.Component {
                 success: false,
             });
         }, 2000);
+    };
+
+    handleError = error => {
+        this.setState({
+            errors: {
+                ...error.response.data,
+            },
+        });
     };
 
     handleAddTag = tag => {
