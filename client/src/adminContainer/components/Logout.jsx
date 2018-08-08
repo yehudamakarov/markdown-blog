@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { logoutAction } from '../../store/actions/loginAction';
+import { logoutAction } from '../../store/actions/authActions';
 
 const Logout = withRouter(
     ({ history, isLoggedIn, logoutAction }) =>

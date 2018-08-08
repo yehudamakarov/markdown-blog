@@ -15,7 +15,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { connect } from 'react-redux';
 import Display from './Display';
-import fetchTags from '../store/actions/fetchTags';
+import { fetchPosts, fetchTags } from '../store/actions/fetchActions';
 
 // import { mailFolderListItems, otherMailFolderListItems } from './tileData';
 
@@ -108,7 +108,8 @@ class TitleBar extends React.Component {
     };
 
     componentDidMount() {
-        const { fetchTags } = this.props;
+        const { fetchPosts, fetchTags } = this.props;
+        fetchPosts();
         fetchTags();
     }
 
@@ -212,6 +213,6 @@ const mapStateToProps = state => ({
 export default withStyles(styles, { withTheme: true })(
     connect(
         mapStateToProps,
-        { fetchTags }
+        { fetchPosts, fetchTags }
     )(TitleBar)
 );

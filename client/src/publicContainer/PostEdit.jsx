@@ -11,8 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import isEditingAction from '../store/actions/isEditingAction';
-import isNotEditingAction from '../store/actions/isNotEditingAction';
+import { isEditingAction, isNotEditingAction } from '../store/actions/isEditingActions';
 import MarkdownEditor from '../adminContainer/components/new/editor/EditorContainer';
 
 const styles = theme => ({

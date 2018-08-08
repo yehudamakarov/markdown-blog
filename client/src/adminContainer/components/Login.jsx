@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-import { loginAction } from '../../store/actions/loginAction';
+import { loginAction } from '../../store/actions/authActions';
 
 class Login extends Component {
     constructor(props) {

@@ -9,9 +9,11 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ImagePopover from './ImagePopover';
-import imageUploadAction from '../../../../store/actions/imageUploadAction';
-import addPreviewAndBase64ImageAction from '../../../../store/actions/addPreviewAndBase64ImageAction';
-import removeImageFromPreviewAndBase64Action from '../../../../store/actions/removeImageFromPreviewAndBase64Action';
+import {
+    imageUploadAction,
+    addPreviewAndBase64ImageAction,
+    removeImageFromPreviewAndBase64Action,
+} from '../../../../store/actions/imageActions';
 
 class ImageUploader extends Component {
     dropzoneStyle = {

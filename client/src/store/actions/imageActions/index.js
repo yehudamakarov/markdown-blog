@@ -5,7 +5,7 @@ import removeCoverImageFromPreviewAndBase64Action from './removeCoverImageFromPr
 import imageUploadAction from './imageUploadAction';
 import coverImageUploadAction from './coverImageUploadAction';
 import addPreviewAndBase64ImageAction from './addPreviewAndBase64ImageAction';
-import moaddCoverPreviewAndBase64ImageActionduleName from './addCoverPreviewAndBase64ImageAction';
+import addCoverPreviewAndBase64ImageAction from './addCoverPreviewAndBase64ImageAction';
 import addBase64ImageAction from './addBase64ImageAction';
 
 export {
@@ -16,6 +16,6 @@ export {
     imageUploadAction,
     coverImageUploadAction,
     addPreviewAndBase64ImageAction,
-    moaddCoverPreviewAndBase64ImageActionduleName,
+    addCoverPreviewAndBase64ImageAction,
     addBase64ImageAction,
 };

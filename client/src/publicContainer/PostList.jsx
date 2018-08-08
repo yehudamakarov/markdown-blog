@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import fetchPosts from '../store/actions/fetchPosts';
 import PostCard from './PostCard';
 
 class PostList extends Component {
-    componentDidMount() {
-        const { fetchPosts } = this.props;
-        fetchPosts();
-    }
-
     render() {
         const { match, posts } = this.props;
         const filteredPosts = match.params.tag
@@ -41,7 +35,4 @@ class PostList extends Component {
 
 const mapStateToProps = state => ({ posts: state.posts });
 
-export default connect(
-    mapStateToProps,
-    { fetchPosts }
-)(PostList);
+export default connect(mapStateToProps)(PostList);

@@ -19,14 +19,11 @@ import InsertPhoto from '@material-ui/icons/InsertPhoto';
 import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
 import FormatListNumbered from '@material-ui/icons/FormatListNumbered';
 import CheckBox from '@material-ui/icons/CheckBox';
-import removeCoverImageWithUrlAction from '../../../../store/actions/removeCoverImageWithUrlAction';
-import addPostAction from '../../../../store/actions/addPostAction';
-import updatePostAction from '../../../../store/actions/updatePostAction';
+import { removeCoverImageWithUrlAction } from '../../../../store/actions/imageActions';
+import { addPostAction, updatePostAction } from '../../../../store/actions/postActions';
 import CoverImageUploader from './CoverImageUploader';
 import ImageUploader from './ImageUploader';
 import SubmitPostButton from './SubmitPostButton';
-import fetchTags from '../../../../store/actions/fetchTags';
-import fetchPosts from '../../../../store/actions/fetchPosts';
 
 const resizeIcons = { fontSize: '2.1em' };
 
@@ -62,8 +59,7 @@ class EditorContainer extends React.Component {
     }
 
     componentDidMount() {
-        const { fetchTags, isEditing } = this.props;
-        fetchTags();
+        const { isEditing } = this.props;
         if (isEditing) {
             const { title, description, tags, content, coverImage } = this.props;
             const tagNames = tags.map(tagObject => tagObject.title);
@@ -131,9 +127,6 @@ class EditorContainer extends React.Component {
     };
 
     handleSuccess = () => {
-        const { fetchTags, fetchPosts } = this.props;
-        fetchTags();
-        fetchPosts();
         this.setState({
             mdeState: {
                 markdown: '# Enter markdown post...',
@@ -312,5 +305,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { fetchPosts, fetchTags, removeCoverImageWithUrlAction, addPostAction, updatePostAction }
+    { removeCoverImageWithUrlAction, addPostAction, updatePostAction }
 )(EditorContainer);

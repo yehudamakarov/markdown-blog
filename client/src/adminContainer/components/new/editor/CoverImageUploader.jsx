@@ -8,11 +8,13 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import CoverImagePopover from './CoverImagePopover';
-import coverImageUploadAction from '../../../../store/actions/coverImageUploadAction';
-import addCoverPreviewAndBase64ImageAction from '../../../../store/actions/addCoverPreviewAndBase64ImageAction';
-import removeCoverImageFromPreviewAndBase64Action from '../../../../store/actions/removeCoverImageFromPreviewAndBase64Action';
+import {
+    coverImageUploadAction,
+    addCoverPreviewAndBase64ImageAction,
+    removeCoverImageFromPreviewAndBase64Action,
+    removeCoverImageWithUrlAction,
+} from '../../../../store/actions/imageActions';
 import UploadedImageUrlPreview from './UploadedImageUrlPreview';
-import removeCoverImageWithUrlAction from '../../../../store/actions/removeCoverImageWithUrlAction';
 
 class CoverImageUploader extends Component {
     dropzoneStyle = {

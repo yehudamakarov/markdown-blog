@@ -1,5 +1,5 @@
 import axios from 'axios';
-import getId from '../../id';
+import getId from '../../../id';
 
 const coverImageUploadAction = imagesWithPreviewAndBase64 => (dispatch, getState) => {
     imagesWithPreviewAndBase64.forEach(imageObjectWithPreviewAndBase64 => {
