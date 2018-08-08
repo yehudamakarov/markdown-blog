@@ -19,7 +19,7 @@ class PostList extends Component {
               })
             : posts;
         return (
-            <Grid container alignItems="flex-start" direction="row" spacing={16}>
+            <Grid container alignItems="center" direction="row" spacing={16}>
                 {filteredPosts.map(post => (
                     <PostCard
                         tags={post.tags}
