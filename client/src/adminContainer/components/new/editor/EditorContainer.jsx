@@ -170,6 +170,7 @@ class EditorContainer extends React.Component {
         this.setState(prevState => ({
             ...prevState,
             [target.name]: target.value,
+            errors: {},
         }));
     };
 

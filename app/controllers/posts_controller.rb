@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
     before_action :require_login, only: [:create, :update, :destroy]
     def index
-        @posts = Post.all
+        @posts = Post.order(created_at: :desc)
         render json: @posts, status: :ok
     end
 

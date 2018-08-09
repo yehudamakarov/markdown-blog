@@ -25,6 +25,9 @@ const styles = theme => ({
         display: 'block',
         margin: 'auto',
         maxWidth: '100%',
+        height: 0,
+        backgroundPosition: 'top',
+        paddingTop: '71%',
     },
     chip: {
         margin: theme.spacing.unit / 2,
@@ -43,58 +46,57 @@ const PostCard = ({
     content,
     coverImage,
 }) => (
-        <Grid item xs={6} lg={4}>
-            <Card className={classes.card}>
-                <CardMedia image={coverImage}>
-                    <img className={classes.media} src={coverImage} alt="" />
-                </CardMedia>
-                <CardContent>
-                    <Grid container justify="space-between">
-                        <Grid item className={classes.chip}>
-                            <Typography gutterBottom variant="headline" component="h2">
-                                {title}
-                            </Typography>
-                            <Typography component="p">{description}</Typography>
-                        </Grid>
-                        <Grid item>
-                            {tags.map(tagObject => (
-                                <Chip
-                                    key={tagObject.slug}
-                                    label={tagObject.title}
-                                    className={classes.chip}
-                                    component={Link}
-                                    to={`${match.url.includes('/admin') ? '/admin' : ''}/tags/${tagObject.slug}`}
-                                    clickable
-                                />
-                            ))}
-                        </Grid>
+    <Grid item xs={6} lg={4}>
+        <Card className={classes.card}>
+            {coverImage ? <CardMedia className={classes.media} image={coverImage} /> : null}
+
+            <CardContent>
+                <Grid container justify="space-between">
+                    <Grid item className={classes.chip}>
+                        <Typography gutterBottom variant="headline" component="h2">
+                            {title}
+                        </Typography>
+                        <Typography component="p">{description}</Typography>
                     </Grid>
-                </CardContent>
-                <CardActions>
-                    <Grid container justify="space-between" className={classes.chip}>
+                    <Grid item>
+                        {tags.map(tagObject => (
+                            <Chip
+                                key={tagObject.slug}
+                                label={tagObject.title}
+                                className={classes.chip}
+                                component={Link}
+                                to={`${match.url.includes('/admin') ? '/admin' : ''}/tags/${tagObject.slug}`}
+                                clickable
+                            />
+                        ))}
+                    </Grid>
+                </Grid>
+            </CardContent>
+            <CardActions>
+                <Grid container justify="space-between" className={classes.chip}>
+                    <Grid item>
+                        <PostView description={description} title={title} content={content} />
+                    </Grid>
+                    {isLoggedIn && (
                         <Grid item>
-                            <PostView description={description} title={title} content={content} />
-                        </Grid>
-                        {isLoggedIn && (
-                            <Grid item>
-                                <PostEdit
-                                    id={id}
-                                    title={title}
-                                    description={description}
-                                    tags={tags}
-                                    content={content}
-                                    coverImage={coverImage}
-                                />
-                                <Button onClick={() => destroyPostAction(id)} size="small" color="primary">
-                                    Delete
+                            <PostEdit
+                                id={id}
+                                title={title}
+                                description={description}
+                                tags={tags}
+                                content={content}
+                                coverImage={coverImage}
+                            />
+                            <Button onClick={() => destroyPostAction(id)} size="small" color="primary">
+                                Delete
                             </Button>
-                            </Grid>
-                        )}
-                    </Grid>
-                </CardActions>
-            </Card>
-        </Grid>
-    );
+                        </Grid>
+                    )}
+                </Grid>
+            </CardActions>
+        </Card>
+    </Grid>
+);
 
 const mapStateToProps = state => ({ isLoggedIn: state.auth.isLoggedIn });
 
