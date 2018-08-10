@@ -73,7 +73,7 @@ const PostCard = ({
                             size="small"
                             variant="contained"
                             component={Link}
-                            to={`${match.url === '/' ? '' : match.url}/posts/${slug}`}
+                            to={`${isLoggedIn ? '/admin' : ''}/posts/${slug}`}
                         >
                             View
                         </Button>

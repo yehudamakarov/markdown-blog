@@ -29,7 +29,7 @@ export class PostViewContainer extends Component {
 
     handleBack = () => {
         const { history } = this.props;
-        history.push('/');
+        history.goBack();
     };
 
     render() {
