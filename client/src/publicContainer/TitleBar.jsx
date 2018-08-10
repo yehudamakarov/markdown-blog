@@ -17,8 +17,6 @@ import { connect } from 'react-redux';
 import Display from './Display';
 import { fetchPosts, fetchTags } from '../store/actions/fetchActions';
 
-// import { mailFolderListItems, otherMailFolderListItems } from './tileData';
-
 const drawerWidth = 314;
 
 const styles = theme => ({

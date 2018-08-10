@@ -10,17 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import PostView from './PostView';
 import PostEdit from './PostEdit';
 import { destroyPostAction } from '../store/actions/postActions';
 
 const styles = theme => ({
-    card: {
-        // margin: 'auto',
-        // marginTop: 'auto',
-        // marginBottom: 'auto',
-        // minHeight: '100%',
-    },
     media: {
         display: 'block',
         margin: 'auto',
@@ -36,6 +29,7 @@ const styles = theme => ({
 
 const PostCard = ({
     isLoggedIn,
+    slug,
     destroyPostAction,
     match,
     classes,
@@ -75,7 +69,14 @@ const PostCard = ({
             <CardActions>
                 <Grid container justify="space-between" className={classes.chip}>
                     <Grid item>
-                        <PostView description={description} title={title} content={content} />
+                        <Button
+                            size="small"
+                            variant="contained"
+                            component={Link}
+                            to={`${match.url === '/' ? '' : match.url}/posts/${slug}`}
+                        >
+                            View
+                        </Button>
                     </Grid>
                     {isLoggedIn && (
                         <Grid item>
