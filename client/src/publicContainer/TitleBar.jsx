@@ -71,6 +71,7 @@ const styles = theme => ({
         ...theme.mixins.toolbar,
     },
     content: {
+        width: 'inherit',
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
         padding: theme.spacing.unit * 3,

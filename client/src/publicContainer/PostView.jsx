@@ -15,8 +15,8 @@ const styles = {
     moveIcon: {
         paddingLeft: '8px',
     },
-    title: {
-        paddingLeft: '10%',
+    description: {
+        paddingLeft: '8px',
         marginTop: '2%',
     },
     appBar: {
@@ -48,7 +48,7 @@ const PostView = ({ classes, handleBack, content, title, description }) => (
             </Toolbar>
         </AppBar>
         <Paper>
-            <Typography className={classes.title} variant="headline">
+            <Typography className={classes.description} variant="headline">
                 {description}
             </Typography>
             <Divider />

@@ -1,7 +1,10 @@
 .content {
-    max-width: 85%;
+    max-width: 95%;
     margin: auto;
     padding: 2%;
+}
+.content pre > code {
+    white-space: pre-wrap;
 }
 code {
     background-color: #d8d8d8;
@@ -16,8 +19,3 @@ img {
     max-width: 100%;
     margin: 0 auto;
 }
-
-/* img {
-    margin-left: -10.8%;
-    max-width: 98vw;
-} */
