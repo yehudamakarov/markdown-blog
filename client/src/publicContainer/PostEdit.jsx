@@ -65,7 +65,7 @@ class PostEdit extends React.Component {
         const { open } = this.state;
         return (
             <div className={classes.inlineButton}>
-                <Button size="small" color="primary" onClick={this.handleClickOpen}>
+                <Button variant="contained" size="small" color="primary" onClick={this.handleClickOpen}>
                     Edit
                 </Button>
                 <Dialog fullScreen open={open} onClose={this.handleClose} TransitionComponent={Transition}>

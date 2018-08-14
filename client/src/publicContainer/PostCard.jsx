@@ -11,7 +11,7 @@ import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import PostEdit from './PostEdit';
-import { destroyPostAction } from '../store/actions/postActions';
+import PostDelete from './PostDelete';
 
 const styles = theme => ({
     media: {
@@ -27,19 +27,7 @@ const styles = theme => ({
     },
 });
 
-const PostCard = ({
-    isLoggedIn,
-    slug,
-    destroyPostAction,
-    match,
-    classes,
-    id,
-    tags,
-    title,
-    description,
-    content,
-    coverImage,
-}) => (
+const PostCard = ({ isLoggedIn, slug, match, classes, id, tags, title, description, content, coverImage }) => (
     <Grid item xs={6} lg={4}>
         <Card className={classes.card}>
             {coverImage ? <CardMedia className={classes.media} image={coverImage} /> : null}
@@ -88,9 +76,7 @@ const PostCard = ({
                                 content={content}
                                 coverImage={coverImage}
                             />
-                            <Button onClick={() => destroyPostAction(id)} size="small" color="primary">
-                                Delete
-                            </Button>
+                            <PostDelete id={id} />
                         </Grid>
                     )}
                 </Grid>
@@ -101,9 +87,4 @@ const PostCard = ({
 
 const mapStateToProps = state => ({ isLoggedIn: state.auth.isLoggedIn });
 
-export default withStyles(styles)(
-    connect(
-        mapStateToProps,
-        { destroyPostAction }
-    )(PostCard)
-);
+export default withStyles(styles)(connect(mapStateToProps)(PostCard));

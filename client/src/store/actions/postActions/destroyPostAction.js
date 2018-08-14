@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const destroyPostAction = id => dispatch => {
+const destroyPostAction = id => dispatch =>
     axios.delete(`/posts/${id}`).then(() => {
         axios
             .get('/posts')
@@ -21,6 +21,4 @@ const destroyPostAction = id => dispatch => {
                 });
             });
     });
-};
-
 export default destroyPostAction;
