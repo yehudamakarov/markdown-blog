@@ -185,7 +185,7 @@ class TitleBar extends React.Component {
                                 <MenuIcon />
                             </IconButton>
                             <Typography variant="title" color="inherit" noWrap>
-                                mdBlog
+                                Markdown Blog
                             </Typography>
                         </Toolbar>
                     </AppBar>
