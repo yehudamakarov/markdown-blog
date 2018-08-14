@@ -31,6 +31,9 @@ const styles = theme => ({
         display: 'flex',
         width: '100%',
     },
+    brand: {
+        textDecoration: 'none',
+    },
     appBar: {
         // eslint-disable-next-line no-undef
         position: window.location.toString().includes('admin') ? 'absolute' : 'fixed',
@@ -184,7 +187,14 @@ class TitleBar extends React.Component {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            <Typography variant="title" color="inherit" noWrap>
+                            <Typography
+                                className={classes.brand}
+                                component={Link}
+                                to="/"
+                                variant="title"
+                                color="inherit"
+                                noWrap
+                            >
                                 Markdown Blog
                             </Typography>
                         </Toolbar>
