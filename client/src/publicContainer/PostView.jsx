@@ -11,13 +11,14 @@ import CloseIcon from '@material-ui/icons/Close';
 import Divider from '@material-ui/core/Divider';
 import PostContent from './PostContent';
 
-const styles = {
+const styles = theme => ({
     moveIcon: {
         paddingLeft: '8px',
     },
     description: {
-        paddingLeft: '8px',
-        marginTop: '2%',
+        padding: theme.spacing.unit,
+        margin: theme.spacing.unit,
+        fontSize: theme.typography.fontSize * 2,
     },
     appBar: {
         position: 'static',
@@ -32,7 +33,7 @@ const styles = {
         maxWidth: '1020px',
         margin: 'auto',
     },
-};
+});
 
 const PostView = ({ classes, handleBack, content, title, description }) => (
     <div className={classes.container}>
@@ -48,7 +49,7 @@ const PostView = ({ classes, handleBack, content, title, description }) => (
             </Toolbar>
         </AppBar>
         <Paper>
-            <Typography className={classes.description} variant="headline">
+            <Typography className={classes.description} variant="caption" gutterBottom>
                 {description}
             </Typography>
             <Divider />
