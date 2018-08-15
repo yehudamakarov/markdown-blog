@@ -1,8 +1,8 @@
-### markdown-blog
+# markdown-blog
 
 A blog with an admin panel that creates blog posts from markdown files. Especially those exported by Quiver.
 
-### Installation
+## Installation
 
 1. You can start by forking and cloning this repository.
 2. Navigate to the directory and run `rails c`​.
@@ -11,7 +11,7 @@ A blog with an admin panel that creates blog posts from markdown files. Especial
 5. Run `​rake start`​. You should have just booted up the backend as well as the front end in your default browser.
 6. To access your admin panel, visit `​/admin`​.
 
-### Usage
+## Usage
 
 The `new` form has the common functionality you would need to make a blog post. The image upload in the form is for a cover image. The one on the bottom is for any images in the post.
 
