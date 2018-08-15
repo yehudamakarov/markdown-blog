@@ -27,7 +27,7 @@ class PostDelete extends React.Component {
 
     delete = () => {
         const { destroyPostAction, id } = this.props;
-        destroyPostAction(id).then(() => this.setState({ open: false }));
+        destroyPostAction(id);
     };
 
     preserve = () => {

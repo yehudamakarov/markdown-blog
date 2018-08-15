@@ -1,5 +1,23 @@
 class Tag < ApplicationRecord
-    has_and_belongs_to_many :posts
-    before_destroy { raise "Still associated to other posts." if self.posts.any? }
+    has_many :post_tags
+    has_many :posts, through: :post_tags
+    before_destroy :ensure_has_no_posts
+    after_destroy :confirm_destroyed
+
+    def ensure_has_no_posts        
+        if self.posts.any?
+            p "#{self.name} will not be destroyed it is still connected to other posts."
+            throw :abort
+        end
+    end
+
+    def confirm_destroyed
+        p "#{self.name} destroyed." 
+    end
+
+    def update_amount_of_posts
+        amount_of_posts = self.posts.count
+        self.update(amount_of_posts: amount_of_posts)
+    end
     
 end

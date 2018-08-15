@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
-    has_and_belongs_to_many :tags
-    before_destroy { tags.clear }
+    has_many :post_tags
+    has_many :tags, through: :post_tags, dependent: :destroy
 
     validates :title, presence: { message: "Don't forget to title your post!" }, uniqueness: { case_sensitive: false, message: "You already made a post with that name" }
     validates :description, presence: { message: "You should describe what your post is about." }
@@ -17,7 +17,7 @@ class Post < ApplicationRecord
     end
 
     def update_from_params(params)
-        self.tags.clear
+        self.tags.destroy_all
         self.title = params[:title].titlecase.strip
         self.slug = params[:title].downcase.split(' ').join('-')
         self.description = params[:description]
@@ -26,7 +26,6 @@ class Post < ApplicationRecord
         self.tags = params[:tags]
     end
     
-
     def tags=(tags)
         tags.each do |tag_string|
             tag = Tag.find_or_create_by(name: tag_string.downcase.strip) do |tag|
@@ -34,6 +33,7 @@ class Post < ApplicationRecord
                 tag.slug = tag.name.split(' ').join('-')
             end
             self.tags << tag
+            tag.update_amount_of_posts
         end
     end
 end

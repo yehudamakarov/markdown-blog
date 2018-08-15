@@ -12,9 +12,14 @@ const postsReducer = (state = [], action) => {
             return [...state.slice(0, indexOfPostToUpdate), action.payload, ...state.slice(indexOfPostToUpdate + 1)];
         }
         case 'DESTROY_POST': {
-            const indexOfPostToDelete = state.findIndex(postObject => action.payload.id === postObject.id);
+            const indexOfPostToDelete = state.findIndex(postObject => action.payload === postObject.id);
 
-            return [...state.slice(0, indexOfPostToDelete), ...state.slice(indexOfPostToDelete + 1)];
+            const newState =
+                indexOfPostToDelete === -1
+                    ? state
+                    : [...state.slice(0, indexOfPostToDelete), ...state.slice(indexOfPostToDelete + 1)];
+
+            return newState;
         }
 
         default:
