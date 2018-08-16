@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Divider from '@material-ui/core/Divider';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import PostContent from './PostContent';
 
 const styles = theme => ({
@@ -35,27 +36,30 @@ const styles = theme => ({
     },
 });
 
-const PostView = ({ classes, handleBack, content, title, description }) => (
-    <div className={classes.container}>
-        <AppBar className={classes.appBar}>
-            <Toolbar className={classes.moveIcon}>
-                {/* make into a back button */}
-                <IconButton color="inherit" onClick={handleBack} aria-label="Back">
-                    <CloseIcon />
-                </IconButton>
-                <Typography variant="title" color="inherit" className={classes.flex}>
-                    {title}
+const PostView = ({ classes, handleBack, post }) =>
+    post === undefined ? (
+        <CircularProgress className={classes.progress} size={50} />
+    ) : (
+        <div className={classes.container}>
+            <AppBar className={classes.appBar}>
+                <Toolbar className={classes.moveIcon}>
+                    {/* make into a back button */}
+                    <IconButton color="inherit" onClick={handleBack} aria-label="Back">
+                        <CloseIcon />
+                    </IconButton>
+                    <Typography variant="title" color="inherit" className={classes.flex}>
+                        {post.title}
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Paper>
+                <Typography className={classes.description} variant="caption" gutterBottom>
+                    {post.description}
                 </Typography>
-            </Toolbar>
-        </AppBar>
-        <Paper>
-            <Typography className={classes.description} variant="caption" gutterBottom>
-                {description}
-            </Typography>
-            <Divider />
-            <PostContent content={content} />
-        </Paper>
-    </div>
-);
+                <Divider />
+                <PostContent content={post.content} />
+            </Paper>
+        </div>
+    );
 
 export default withStyles(styles)(PostView);
