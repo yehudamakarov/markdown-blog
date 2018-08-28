@@ -103,7 +103,7 @@ const styles = theme => ({
     },
 });
 
-class TitleBar extends React.Component {
+class TitleSideBar extends React.Component {
     state = {
         open: false,
         anchor: 'left',
@@ -133,6 +133,17 @@ class TitleBar extends React.Component {
         const { classes, tags, match } = this.props;
         const { anchor, open } = this.state;
 
+        const listItems = tags.filter(tag => tag.amountOfPosts !== 0).map(tag => (
+            <ListItem
+                key={tag.name}
+                button
+                component={Link}
+                to={`${match.url === '/' ? '' : match.url}/tags/${tag.slug}`}
+            >
+                <ListItemText primary={tag.title} />
+            </ListItem>
+        ));
+
         const drawer = (
             <Drawer
                 variant="persistent"
@@ -148,19 +159,8 @@ class TitleBar extends React.Component {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>
-                    {tags.filter(tag => tag.amountOfPosts !== 0).map(tag => (
-                        <ListItem
-                            key={tag.name}
-                            button
-                            component={Link}
-                            to={`${match.url === '/' ? '' : match.url}/tags/${tag.slug}`}
-                        >
-                            <ListItemText primary={tag.title} />
-                        </ListItem>
-                    ))}
-                </List>
-                <Divider />
+                <List>{listItems.length > 0 ? listItems : null}</List>
+                {listItems.length > 0 ? <Divider /> : null}
                 <List>
                     <ListItem button component={Link} to={`${match.url}`}>
                         <ListItemText primary="All Posts" />
@@ -223,5 +223,5 @@ export default withStyles(styles, { withTheme: true })(
     connect(
         mapStateToProps,
         { fetchPosts, fetchTags }
-    )(TitleBar)
+    )(TitleSideBar)
 );

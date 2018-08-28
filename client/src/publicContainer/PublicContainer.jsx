@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import TitleBar from './TitleBar';
+import TitleSideBar from './TitleSideBar';
 
 const styles = theme => ({
     root: {
@@ -14,7 +14,7 @@ const styles = theme => ({
 const PublicContainer = ({ classes, match }) => (
     <div className={classes.root}>
         <Typography component="div">
-            <TitleBar match={match} />
+            <TitleSideBar match={match} />
         </Typography>
     </div>
 );
