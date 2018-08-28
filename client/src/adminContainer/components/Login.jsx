@@ -13,6 +13,7 @@ class Login extends Component {
         this.state = {
             email: '',
             password: '',
+            errors: {},
         };
     }
 
@@ -25,11 +26,17 @@ class Login extends Component {
     onSubmit = event => {
         const { loginAction } = this.props;
         event.preventDefault();
-        loginAction(this.state);
+        loginAction(this.state).catch(this.handleError);
+    };
+
+    handleError = error => {
+        this.setState({
+            errors: { ...error.response.data },
+        });
     };
 
     render() {
-        const { email, password } = this.state;
+        const { email, password, errors } = this.state;
         const { isLoggedIn } = this.props;
         const style = { width: '100%', marginRight: 'auto', marginLeft: 'auto', marginBottom: '12px' };
         if (isLoggedIn === true) {
@@ -41,6 +48,8 @@ class Login extends Component {
                     <Grid item>
                         <form>
                             <TextField
+                                error={errors.emailError}
+                                helperText={errors.emailError ? 'Forgot your email address?' : null}
                                 style={style}
                                 type="text"
                                 label="Email Address"
@@ -49,6 +58,8 @@ class Login extends Component {
                                 onChange={this.onChange}
                             />
                             <TextField
+                                error={errors.passwordError}
+                                helperText={errors.passwordError ? 'Password?' : null}
                                 style={style}
                                 type="password"
                                 label="Password"

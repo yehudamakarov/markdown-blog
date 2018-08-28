@@ -6,7 +6,7 @@ export const loginAction = ({ email, password }) => dispatch =>
             email,
             password,
         })
-        .then(() => dispatch({ type: 'LOGIN' }))
-        .catch(() => dispatch({ type: 'LOGOUT' }));
+        .then(dispatch({ type: 'LOGIN' }))
+        .catch(dispatch({ type: 'LOGOUT' }));
 
 export const logoutAction = () => dispatch => axios.get('/logout').then(() => dispatch({ type: 'LOGOUT' }));
