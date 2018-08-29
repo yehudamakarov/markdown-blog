@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
         end
         @user = @user.authenticate(params[:password])   
         if @user
-            render json: @user
+            render json: @user, status: 200
             session[:logged_in] = true
         else
             render json: {emailError: false, passwordError: true} , status: 403

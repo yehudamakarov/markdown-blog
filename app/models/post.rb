@@ -2,7 +2,7 @@ class Post < ApplicationRecord
     has_many :post_tags
     has_many :tags, through: :post_tags, dependent: :destroy
 
-    validates :title, presence: { message: "Don't forget to title your post!" }, uniqueness: { case_sensitive: false, message: "You already made a post with that name" }
+    validates :title, presence: { message: "Don't forget to title your post!" }, uniqueness: { case_sensitive: false, message: "You already made a post with that name." }
     validates :description, presence: { message: "You should describe what your post is about." }
     
     def self.new_from_params(params)
@@ -26,13 +26,14 @@ class Post < ApplicationRecord
         self.tags = params[:tags]
     end
     
-    def tags=(tags)
+    def tags=(tags)        
         tags.each do |tag_string|
             tag = Tag.find_or_create_by(name: tag_string.downcase.strip) do |tag|
                 tag.title = tag.name.titlecase
                 tag.slug = tag.name.split(' ').join('-')
             end
             self.tags << tag
+            self.save            
             tag.update_amount_of_posts
         end
     end

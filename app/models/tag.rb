@@ -15,9 +15,8 @@ class Tag < ApplicationRecord
         p "#{self.name} destroyed." 
     end
 
-    def update_amount_of_posts
-        amount_of_posts = self.posts.count
-        self.update(amount_of_posts: amount_of_posts)
+    def update_amount_of_posts        
+        post_count = self.posts.count
+        self.update(amount_of_posts: post_count)
     end
-    
 end
