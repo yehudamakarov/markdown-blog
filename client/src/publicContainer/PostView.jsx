@@ -11,6 +11,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Divider from '@material-ui/core/Divider';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PostContent from './PostContent';
+import CopyMarkdown from './CopyMarkdown';
 
 const styles = theme => ({
     moveIcon: {
@@ -50,6 +51,7 @@ const PostView = ({ classes, handleBack, post }) =>
                     <Typography variant="title" color="inherit" className={classes.flex}>
                         {post.title}
                     </Typography>
+                    <CopyMarkdown content={post.content} />
                 </Toolbar>
             </AppBar>
             <Paper>
