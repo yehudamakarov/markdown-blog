@@ -3,6 +3,11 @@ Markdown Blog
 
 A blog with an admin panel that creates blog posts from markdown files. Especially those exported by Quiver.
 
+### Demo
+
+Youtube:
+https://youtu.be/x0sqcPddlok
+
 ### Installation
 
 1. You can start by forking and cloning this repository.

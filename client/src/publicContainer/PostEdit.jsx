@@ -13,6 +13,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import { isEditingAction, isNotEditingAction } from '../store/actions/isEditingActions';
 import MarkdownEditor from '../adminContainer/components/new/editor/EditorContainer';
+import PostDelete from './PostDelete';
 
 const styles = theme => ({
     moveIcon: {
@@ -77,9 +78,9 @@ class PostEdit extends React.Component {
                             <Typography variant="title" color="inherit" className={classes.flex}>
                                 Editing: {title}
                             </Typography>
-                            <Button variant="contained" color="secondary" onClick={this.handleClose}>
+                            <PostDelete id={id} variant="contained" color="secondary" onClick={this.handleClose}>
                                 Delete
-                            </Button>
+                            </PostDelete>
                         </Toolbar>
                     </AppBar>
                     <Paper style={{ paddingTop: '64px' }}>
